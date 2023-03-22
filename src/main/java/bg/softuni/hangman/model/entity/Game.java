@@ -11,7 +11,7 @@ public class Game extends BaseEntity {
 
 
     @OneToOne //?
-    private User player;
+    private Player player;
 
 
     @OneToOne //?
@@ -25,11 +25,11 @@ public class Game extends BaseEntity {
     @Column
     private Boolean outcome; // true for win, false for loss
 
-    public User getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 
-    public Game setPlayer(User player) {
+    public Game setPlayer(Player player) {
         this.player = player;
         return this;
     }

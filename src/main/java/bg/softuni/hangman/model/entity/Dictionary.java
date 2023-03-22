@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 @Table(name = "dictionary")
 public class Dictionary extends BaseEntity {
 
-    @Column(nullable = false)
+    @Column
     private String word;
 
     @Column(columnDefinition = "TEXT")

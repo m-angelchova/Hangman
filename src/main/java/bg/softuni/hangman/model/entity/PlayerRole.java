@@ -5,14 +5,11 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "roles")
-public class Role extends BaseEntity {
+public class PlayerRole extends BaseEntity {
 
-    @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private UserRoleEnum role;
 
-    public Role() {
-    }
 
     //Getters and Setters:
 
@@ -20,7 +17,7 @@ public class Role extends BaseEntity {
         return role;
     }
 
-    public Role setRole(UserRoleEnum role) {
+    public PlayerRole setRole(UserRoleEnum role) {
         this.role = role;
         return this;
     }

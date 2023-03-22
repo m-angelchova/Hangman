@@ -1,14 +1,14 @@
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://localhost:3306/Hangman?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
+    url: "jdbc:mysql://localhost:3306/hangman?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
     username: root
     password: banana_42
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     open-in-view: false
     properties:
       hibernate:
@@ -27,6 +27,6 @@ spring:
 #  username: "admin@example.com"
 #  password: ""
 
-#Hangman:
-#  admin:
-#    defaultpass: ${DEFAULT_PASS:test}
+hangman:
+  admin:
+    defaultpass: ${DEFAULT_PASS:defaultPass}

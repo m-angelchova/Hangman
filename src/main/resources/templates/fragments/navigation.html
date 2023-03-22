@@ -19,11 +19,11 @@
     <th:block sec:authorize="!isAuthenticated()">
       <ul class="navbar-nav mr-auto col-12 justify-content-end">
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/users/register}">Register</a>
+          <a class="nav-link" th:href="@{/register}">Register</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/users/login}">Login</a>
+          <a class="nav-link" th:href="@{/login}">Login</a>
         </li>
       </ul>
     </th:block>
@@ -44,7 +44,7 @@
 
 
         <li class="nav-item" sec:authorize="isAuthenticated()">
-          <form method="POST" th:action="@{/users/logout}"  class="form-inline my-2 my-lg-0 border px-3">
+          <form method="POST" th:action="@{/logout}"  class="form-inline my-2 my-lg-0 border px-3">
             <button type="submit" name="submit" value="value" class="btn btn-link nav-link">Logout</button>
           </form>
 

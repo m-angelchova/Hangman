@@ -16,24 +16,20 @@
     <h2 class="text-center text-white">Register User</h2>
 
     <form th:method="POST"
-          th:action="@{/users/register}"
-          th:object="${userRegisterForm}"
+          th:action="@{/register}"
+          th:object="${playerRegisterDto}"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
 
         <div class="row">
             <div class="form-group col-md-6 mb-3">
 
-                <label for="firstName"
+                <label th:for="firstName"
                        class="text-white font-weight-bold">First Name</label>
 
-                <input id="firstName"
-                       name="firstName"
-                       type="text"
-                       min="2"
-                       max="20"
+                <input type="text"
+                       th:field="*{firstName}"
                        class="form-control"
-                       placeholder="First name"
-                th:value="*{firstName}"/>
+                       placeholder="First name"/>
 
                 <p th:if="${#fields.hasErrors('firstName')}"
                    class="errors alert alert-danger">
@@ -44,17 +40,13 @@
 
             <div class="form-group col-md-6 mb-3">
 
-                <label for="lastName"
+                <label th:for="lastName"
                        class="text-white font-weight-bold">Last Name</label>
 
-                <input id="lastName"
-                       name="lastName"
-                       type="text"
-                       min="2"
-                       max="20"
+                <input type="text"
+                       th:field="*{lastName}"
                        class="form-control"
-                       placeholder="First name"
-                       th:value="*{lastName}"
+                       placeholder="Last name"
                 />
 
                 <p th:if="${#fields.hasErrors('lastName')}"
@@ -67,20 +59,17 @@
         <div class="row">
             <div class="form-group col-md-6 mb-3">
 
-                <label for="username"
+                <label th:for="email"
                        class="text-white font-weight-bold">
-                    Username
+                    E-mail
                 </label>
 
-                <input id="username"
-                       name="username"
-                       type="text"
-                       min="2"
-                       max="20"
+                <input type="text"
+                       th:field="*{email}"
                        class="form-control"
-                       placeholder="First name"
-                       th:value="*{username}"/>
-                <p th:if="${#fields.hasErrors('username')}"
+                       placeholder="E-mail"
+                       />
+                <p th:if="${#fields.hasErrors('email')}"
                    class="errors alert alert-danger">
                     Username is required.
                 </p>
@@ -89,15 +78,15 @@
 
         <div class="row">
             <div class="form-group col-md-6 mb-3">
-                <label for="password"
+                <label th:for="password"
                        class="text-white font-weight-bold">
                     Password
                 </label>
                 <input id="password"
                        name="password"
                        type="password"
-                       min="2"
-                       max="20"
+                       min="6"
+                       max="15"
                        class="form-control"
                        placeholder="Password"
                        th:value="*{password}"/>
@@ -117,8 +106,8 @@
                 <input id="confirmPassword"
                        name="confirmPassword"
                        type="password"
-                       min="2"
-                       max="20"
+                       min="6"
+                       max="15"
                        class="form-control"
                        placeholder="Password"
                        th:value="*{confirmPassword}"/>
@@ -131,30 +120,11 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="text-center text-white font-weight-bold" for="roles">Roles</label>
-            <select id="roles"
-                    class="form-control"
-                    name="role"
-                    multiple>
-
-                <tr th:each="role: ${roles}">
-                    <option th:text="${role.role}" th:value="${role.role}"></option>
-                </tr>
-
-            </select>
-
-            <p th:if="${#fields.hasErrors('role')}"
-               class="errors alert alert-danger">
-                Selecting a role is required.
-            </p>
-
-        </div>
 
         <div class="row">
             <div class="col col-md-4">
                 <div class="button-holder d-flex">
-                    <input type="submit" class="btn btn-info btn-lg" value="Submit Offer"/>
+                    <input type="submit" class="btn btn-info btn-lg" value="Register"/>
                 </div>
             </div>
         </div>

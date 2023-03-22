@@ -6,9 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
-public class User extends BaseEntity {
-
+@Table(name = "players")
+public class Player extends BaseEntity {
+// User entity
 
     @Column(nullable = false)
     private String email;
@@ -22,8 +22,13 @@ public class User extends BaseEntity {
     @Column(nullable = false, name = "last_name")
     private String lastName;
 
-    @ManyToOne
-    private Role role;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "players_roles",
+            joinColumns = { @JoinColumn(name = "player_id") },
+            inverseJoinColumns = { @JoinColumn(name = "role_id") }
+    )
+    private List<PlayerRole> roles;
 
     @Column
     private Long score;
@@ -34,7 +39,7 @@ public class User extends BaseEntity {
 
     //Constructor:
 
-    public User() {
+    public Player() {
         gamesPlayed = new LinkedList<>(); //to keep the games chronologically
         score = 0L;
     }
@@ -45,7 +50,7 @@ public class User extends BaseEntity {
         return email;
     }
 
-    public User setEmail(String email) {
+    public Player setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -54,7 +59,7 @@ public class User extends BaseEntity {
         return password;
     }
 
-    public User setPassword(String password) {
+    public Player setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -63,7 +68,7 @@ public class User extends BaseEntity {
         return firstName;
     }
 
-    public User setFirstName(String firstName) {
+    public Player setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -72,17 +77,17 @@ public class User extends BaseEntity {
         return lastName;
     }
 
-    public User setLastName(String lastName) {
+    public Player setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
 
-    public Role getRole() {
-        return role;
+    public List<PlayerRole> getRoles() {
+        return roles;
     }
 
-    public User setRole(Role role) {
-        this.role = role;
+    public Player setRoles(List<PlayerRole> roles) {
+        this.roles = roles;
         return this;
     }
 
@@ -90,7 +95,7 @@ public class User extends BaseEntity {
         return score;
     }
 
-    public User setScore(Long score) {
+    public Player setScore(Long score) {
         this.score = score;
         return this;
     }
@@ -99,7 +104,7 @@ public class User extends BaseEntity {
         return gamesPlayed;
     }
 
-    public User setGamesPlayed(List<Game> gamesPlayed) {
+    public Player setGamesPlayed(List<Game> gamesPlayed) {
         this.gamesPlayed = gamesPlayed;
         return this;
     }
