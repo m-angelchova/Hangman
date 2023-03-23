@@ -15,17 +15,14 @@ spring:
         format_sql: true
     defer-datasource-initialization: true
 
-  sql:
-    init:
-      mode: always
 
 # mail service and admin security:
 
-#mail:
-#  host: localhost
-#  port: 1025
-#  username: "admin@example.com"
-#  password: ""
+mail:
+  host: localhost
+  port: 1025
+  username: "admin@example.com"
+  password: ""
 
 hangman:
   admin:

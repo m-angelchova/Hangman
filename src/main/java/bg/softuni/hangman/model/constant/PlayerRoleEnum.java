@@ -1,5 +1,5 @@
 package bg.softuni.hangman.model.constant;
 
-public enum UserRoleEnum {
+public enum PlayerRoleEnum {
     ADMIN, USER
 }

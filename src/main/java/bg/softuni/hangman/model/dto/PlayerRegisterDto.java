@@ -7,12 +7,13 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
+import org.hibernate.validator.constraints.UniqueElements;
 
 
 public class PlayerRegisterDto {
     @NotBlank
     @Email
+    @UniqueElements // might be buggy?
     private String email;
 
     @NotNull

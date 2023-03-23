@@ -9,16 +9,17 @@
 </head>
 <body>
 
-  Hello, <th:block th:text="${userName}"></th:block>!
+  Hello, <th:block th:text="${fullName}"></th:block>!
 
   <p>
-    Welcome to Mobilele!
-    Later we will send here and activation link :-) as the students want :-)
+    Welcome to Hangman!
+    Please click here to activate your account:
+    <th:block th:text="${activationLink}"></th:block>
   </p>
 
   <p>
   Best,
-  Mobilele!
+  Hangman!
   </p>
 
 </body>

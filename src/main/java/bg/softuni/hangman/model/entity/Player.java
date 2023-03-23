@@ -1,6 +1,7 @@
 package bg.softuni.hangman.model.entity;
 
 import jakarta.persistence.*;
+import org.modelmapper.internal.bytebuddy.implementation.bind.annotation.Default;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -36,6 +37,9 @@ public class Player extends BaseEntity {
     @Column(name = "games_played")
     @OneToMany(mappedBy = "id") //??
     private List<Game> gamesPlayed;
+
+    @Column
+    private Boolean isAccountActive;
 
     //Constructor:
 
@@ -106,6 +110,15 @@ public class Player extends BaseEntity {
 
     public Player setGamesPlayed(List<Game> gamesPlayed) {
         this.gamesPlayed = gamesPlayed;
+        return this;
+    }
+
+    public Boolean getAccountActive() {
+        return isAccountActive;
+    }
+
+    public Player setAccountActive(Boolean accountActive) {
+        isAccountActive = accountActive;
         return this;
     }
 }

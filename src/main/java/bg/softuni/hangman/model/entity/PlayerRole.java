@@ -1,6 +1,6 @@
 package bg.softuni.hangman.model.entity;
 
-import bg.softuni.hangman.model.constant.UserRoleEnum;
+import bg.softuni.hangman.model.constant.PlayerRoleEnum;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,16 +8,16 @@ import jakarta.persistence.*;
 public class PlayerRole extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
-    private UserRoleEnum role;
+    private PlayerRoleEnum role;
 
 
     //Getters and Setters:
 
-    public UserRoleEnum getRole() {
+    public PlayerRoleEnum getRole() {
         return role;
     }
 
-    public PlayerRole setRole(UserRoleEnum role) {
+    public PlayerRole setRole(PlayerRoleEnum role) {
         this.role = role;
         return this;
     }
