@@ -1,5 +1,6 @@
 package bg.softuni.hangman.model.entity;
 
+import bg.softuni.hangman.model.constant.GameOutcomeEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -10,20 +11,20 @@ import jakarta.validation.constraints.Min;
 public class Game extends BaseEntity {
 
 
-    @OneToOne //?
+    @ManyToOne //?
     private Player player;
 
 
-    @OneToOne //?
+    @ManyToOne //?
     private Dictionary dictionary;
 
     @Column
-    @Min(0)
-    @Max(200)
+//    @Min(0)
+//    @Max(200)
     private Long score;
 
-    @Column
-    private Boolean outcome; // true for win, false for loss
+    @Enumerated(EnumType.STRING)
+    private GameOutcomeEnum outcome;
 
     public Player getPlayer() {
         return player;
@@ -52,11 +53,11 @@ public class Game extends BaseEntity {
         return this;
     }
 
-    public Boolean getOutcome() {
+    public GameOutcomeEnum getOutcome() {
         return outcome;
     }
 
-    public Game setOutcome(Boolean outcome) {
+    public Game setOutcome(GameOutcomeEnum outcome) {
         this.outcome = outcome;
         return this;
     }

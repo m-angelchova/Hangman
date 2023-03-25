@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class DatabaseInnitSeeder implements CommandLineRunner {
 
+    //Initiating the Dictionary class + some test users
+
     private final DatabaseInnitService innitService;
 
     public DatabaseInnitSeeder(DatabaseInnitService innitService) {
