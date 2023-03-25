@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
 @Service
 public class PlayerService {
     private final PlayerRepository playerRepository;
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final String defaultAdminPass;
     private final EmailService emailService;
@@ -54,5 +54,14 @@ public class PlayerService {
 
     public List<PlayerRole> defaultPlayerRoles(){
         return List.of(this.roleRepository.findByRole(PlayerRoleEnum.USER).orElseThrow(NoSuchElementException::new));
+    }
+
+    public PlayerRole getAdminRole(){
+        return this.roleRepository.findByRole(PlayerRoleEnum.ADMIN).orElseThrow(NoSuchElementException::new);
+    }
+
+    public void promoteToAdmin(String playerEmail){
+        Player player = this.playerRepository.findByEmail(playerEmail).orElseThrow(NoSuchElementException::new);
+        player.getRoles().add(getAdminRole());
     }
 }

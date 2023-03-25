@@ -12,28 +12,13 @@ public class Game extends BaseEntity {
 
 
     @ManyToOne //?
-    private Player player;
-
-
-    @ManyToOne //?
     private Dictionary dictionary;
 
     @Column
-//    @Min(0)
-//    @Max(200)
     private Long score;
 
     @Enumerated(EnumType.STRING)
     private GameOutcomeEnum outcome;
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public Game setPlayer(Player player) {
-        this.player = player;
-        return this;
-    }
 
     public Dictionary getDictionary() {
         return dictionary;
