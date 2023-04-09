@@ -1,19 +1,18 @@
 package bg.softuni.hangman.model.dto;
 
-import bg.softuni.hangman.model.entity.Game;
-import bg.softuni.hangman.model.entity.PlayerRole;
-import jakarta.persistence.*;
+import bg.softuni.hangman.validation.PasswordMatch;
+import bg.softuni.hangman.validation.UniqueEmail;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.UniqueElements;
 
-
+@PasswordMatch(password = "password", confirmPassword = "confirmPassword")
 public class PlayerRegisterDto {
     @NotBlank
     @Email
-    @UniqueElements // might be buggy?
+    @UniqueEmail
     private String email;
 
     @NotNull

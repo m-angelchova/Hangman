@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/head}">
+</head>
+<body>
+
+<div>
+    <nav th:replace="~{/fragments/navigation}"></nav>
+</div>
+
+
+<div class="container-fluid">
+    <h1 class="text-center text-white mt-5">Здравей, <div class="d-inline" th:text="${firstName}"/>!</h1>
+</div>
+
+<img alt="hangman" th:src="@{/images/logo.png}" class="logo-header">
+
+<div class="container-custom">
+    <h2 class="text-center text-white mt-5">Твоят максимален резултат: <div class="d-inline" th:text="${score}"/></h2>
+</div>
+
+<div class="button-container">
+    <a th:href="@{/play}">
+        <button type="button" class="btn btn-primary btn-lg">Играй</button>
+    </a>
+</div>
+
+<div class="container-custom">
+    <h2 class="text-center text-white mt-5">Думата на деня е:</h2>
+    <h2 class="text-center text-white mt-5" th:text="${word}"></h2>
+    <h4 class="text-center text-white mt-5" th:text="${definition}"></h4>
+</div>
+
+<div>
+    <footer></footer>
+</div>
+
+</body>
+</html>

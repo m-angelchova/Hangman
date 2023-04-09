@@ -1,5 +1,6 @@
 package bg.softuni.hangman.service;
 
+import bg.softuni.hangman.model.AppUserDetails;
 import bg.softuni.hangman.model.entity.Player;
 import bg.softuni.hangman.model.entity.PlayerRole;
 import bg.softuni.hangman.repository.PlayerRepository;
@@ -32,11 +33,11 @@ public class ApplicationUserDetailsService implements UserDetailsService {
   }
 
   private UserDetails map(Player player) {
-    return new User(
+    return new AppUserDetails(
         player.getEmail(),
         player.getPassword(),
         extractAuthorities(player)
-    );
+    ).setFirstName(player.getFirstName()).setScore(player.getScore());
   }
 
   private List<GrantedAuthority> extractAuthorities(Player player) {

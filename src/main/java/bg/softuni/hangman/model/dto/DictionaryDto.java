@@ -1,7 +1,14 @@
 package bg.softuni.hangman.model.dto;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 public class DictionaryDto {
+    @NotNull
     private String word;
+
+    @NotNull
+    @Size(max = 500)
     private String description;
 
     public String getWord() {

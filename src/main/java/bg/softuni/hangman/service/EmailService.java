@@ -16,6 +16,7 @@ public class EmailService {
     private final JavaMailSender javaMailSender;
     private final TemplateEngine templateEngine;
 
+
     public EmailService(JavaMailSender javaMailSender,
                         TemplateEngine templateEngine) {
         this.javaMailSender = javaMailSender;
@@ -47,9 +48,10 @@ public class EmailService {
         ctx.setLocale(Locale.getDefault());
         ctx.setVariable("fullName", fullName);
 
-        String activationLink = "http://localhost:8080/activate?code=" + generateActivationCode();
-
-        ctx.setVariable("activationLink", activationLink);
+//        String userCode = generateActivationCode();
+//        String activationLink = "http://localhost:8080/activate?code=" + userCode;
+//
+//        ctx.setVariable("activationLink", activationLink);
 
         return templateEngine.process("email/registration", ctx);
     }
@@ -57,5 +59,11 @@ public class EmailService {
     private String generateActivationCode() {
         return UUID.randomUUID().toString();
     }
+
+
+
+//    private void connectUserToCode(){
+//
+//    }
 
 }

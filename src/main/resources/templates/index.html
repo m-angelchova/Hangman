@@ -5,15 +5,19 @@
 </head>
 <body>
 
-<div>
-    <nav th:replace="~{/fragments/navigation}"></nav>
-</div>
-
-
 <div class="container-fluid">
-    <h5 class="text-center text-white mt-5">Welcome to MobiLeLeLe</h5>
+    <h3 class="text-center text-white mt-5">ДОБРЕ ДОШЛИ В</h3>
 </div>
 
+<img alt="hangman" th:src="@{/images/logo.png}" class="logo-header">
+<div class="button-container">
+    <a th:href="@{/login}">
+        <button type="button" class="btn btn-secondary btn-lg">Влизане</button>
+    </a>
+    <a th:href="@{/register}">
+        <button type="button" class="btn btn-secondary btn-lg">Регистрация</button>
+    </a>
+</div>
 <div>
     <footer></footer>
 </div>

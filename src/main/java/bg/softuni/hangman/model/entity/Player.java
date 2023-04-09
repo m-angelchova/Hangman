@@ -38,14 +38,15 @@ public class Player extends BaseEntity {
     @OneToMany(mappedBy = "id") //??
     private List<Game> gamesPlayed;
 
-    @Column
-    private Boolean isAccountActive;
+//    @Column
+//    private Boolean isAccountActive;
 
     //Constructor:
 
     public Player() {
         gamesPlayed = new LinkedList<>(); //to keep the games chronologically
         score = 0L;
+//        isAccountActive = false;
     }
 
     //Getters and Setters:
@@ -113,12 +114,12 @@ public class Player extends BaseEntity {
         return this;
     }
 
-    public Boolean getAccountActive() {
-        return isAccountActive;
-    }
-
-    public Player setAccountActive(Boolean accountActive) {
-        isAccountActive = accountActive;
-        return this;
-    }
+//    public Boolean getAccountActive() {
+//        return isAccountActive;
+//    }
+//
+//    public Player setAccountActive(Boolean accountActive) {
+//        isAccountActive = accountActive;
+//        return this;
+//    }
 }

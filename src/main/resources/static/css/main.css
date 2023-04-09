@@ -1,19 +1,32 @@
 body {
-     background-image: url('/images/1.jpg');
+     background-image: url('/images/besenica-background-01.png');
      background-position: center center;
      background-repeat: no-repeat;
      background-attachment: fixed;
      background-size: cover;
-     background-color: #464646;
- }
+     background-color: black;
+     font-family: 'Montserrat', sans-serif;
+}
 
 .navbar .logo {
      max-height: 50px;
      padding-right: 100px;
 }
+.logo-header{
+     max-width: 1000px;
+     display: block;
+     margin-top: 70px;
+     margin-left: auto;
+     margin-right: auto;
+}
 
 .container, .container-fluid {
      padding-top: 90px;
+}
+.container-custom{
+     padding-top: 20px;
+     padding-left: 200px;
+     padding-right: 200px;
 }
 
 .bg-text {
@@ -27,6 +40,30 @@ body {
      padding: 20px;
      text-align: center;
 }
+.btn{
+     background-color: #36a9e1;
+     display: inline-block;
+     margin-top: 20px;
+     margin-left: 20px;
+     margin-right: 20px;
+}
+.btn:hover{
+     background-color: #18617b;
+}
+.no-pad{
+     margin-top: 0px;
+     margin-left: 0px;
+     margin-right: 20px;
+}
+.button-container{
+
+     width: 100%;
+     display: flex;
+     align-content: center;
+     justify-content: center;
+     padding: 4px 4px 4px 4px;
+}
+
 
 .brand-section {
      background-image: linear-gradient(to bottom right, rgba(220, 220, 220, 0.9), rgba(255, 255, 255, 0.9));

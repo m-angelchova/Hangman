@@ -5,7 +5,7 @@ import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
 
-public class PasswordMather implements ConstraintValidator<PasswordMatch, Object> {
+public class PasswordMatcher implements ConstraintValidator<PasswordMatch, Object> {
 
     private String password;
     private String confirmPassword;

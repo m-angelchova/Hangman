@@ -13,7 +13,7 @@
 
 <div class="container">
 
-    <h2 class="text-center text-white">Register User</h2>
+    <h2 class="text-center text-white">Регистрация</h2>
 
     <form th:method="POST"
           th:action="@{/register}"
@@ -24,16 +24,16 @@
             <div class="form-group col-md-6 mb-3">
 
                 <label th:for="firstName"
-                       class="text-white font-weight-bold">First Name</label>
+                       class="text-white font-weight-bold">Име</label>
 
                 <input type="text"
                        th:field="*{firstName}"
                        class="form-control"
-                       placeholder="First name"/>
+                       placeholder="Име"/>
 
                 <p th:if="${#fields.hasErrors('firstName')}"
                    class="errors alert alert-danger">
-                    First name is required.
+                    Въведете име.
                 </p>
 
             </div>
@@ -41,17 +41,17 @@
             <div class="form-group col-md-6 mb-3">
 
                 <label th:for="lastName"
-                       class="text-white font-weight-bold">Last Name</label>
+                       class="text-white font-weight-bold">Фамилия</label>
 
                 <input type="text"
                        th:field="*{lastName}"
                        class="form-control"
-                       placeholder="Last name"
+                       placeholder="Фамилия"
                 />
 
                 <p th:if="${#fields.hasErrors('lastName')}"
                    class="errors alert alert-danger">
-                    Last name is required.
+                    Въведете фамилия.
                 </p>
             </div>
         </div>
@@ -61,17 +61,17 @@
 
                 <label th:for="email"
                        class="text-white font-weight-bold">
-                    E-mail
+                    Имейл
                 </label>
 
                 <input type="text"
                        th:field="*{email}"
                        class="form-control"
-                       placeholder="E-mail"
+                       placeholder="Имейл"
                        />
                 <p th:if="${#fields.hasErrors('email')}"
                    class="errors alert alert-danger">
-                    Username is required.
+                    Въведете имейл.
                 </p>
             </div>
         </div>
@@ -80,7 +80,7 @@
             <div class="form-group col-md-6 mb-3">
                 <label th:for="password"
                        class="text-white font-weight-bold">
-                    Password
+                    Парола
                 </label>
                 <input id="password"
                        name="password"
@@ -88,11 +88,11 @@
                        min="6"
                        max="15"
                        class="form-control"
-                       placeholder="Password"
+                       placeholder="Парола"
                        th:value="*{password}"/>
                 <p th:if="${#fields.hasErrors('password')}"
                    class="errors alert alert-danger">
-                    Password is required.
+                    Въведете парола.
                 </p>
             </div>
 
@@ -100,7 +100,7 @@
 
                 <label for="confirmPassword"
                        class="text-white font-weight-bold">
-                    Confirm Password
+                    Потвърдете паролата
                 </label>
 
                 <input id="confirmPassword"
@@ -109,12 +109,12 @@
                        min="6"
                        max="15"
                        class="form-control"
-                       placeholder="Password"
+                       placeholder="Парола"
                        th:value="*{confirmPassword}"/>
 
                 <p th:if="${#fields.hasErrors('confirmPassword')}"
                    class="errors alert alert-danger">
-                    Passwords does not match.
+                    Въведете съвпадаща парола.
                 </p>
 
             </div>
@@ -124,7 +124,7 @@
         <div class="row">
             <div class="col col-md-4">
                 <div class="button-holder d-flex">
-                    <input type="submit" class="btn btn-info btn-lg" value="Register"/>
+                    <input type="submit" class="btn btn-info btn-lg" value="Регистрация"/>
                 </div>
             </div>
         </div>

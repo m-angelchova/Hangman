@@ -11,7 +11,7 @@ public class Dictionary extends BaseEntity {
     @Column
     private String word;
 
-    @Column(columnDefinition = "TEXT")
+    @Column
     private String definition;
 
     //Getters and Setters:

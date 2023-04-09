@@ -110,19 +110,19 @@ public class GameService {
         return this.modelMapper.map(dictionary, DictionaryDto.class);
     }
 
-    public void saveGame(){
+    public void saveGame(String email){
 
-        Long score = isWon() ? calculateScore() : 0;
+        Long score = isWon() ? calculateScore() : 0L;
 
         Game game = new Game().setDictionary(dictionary)
                 .setOutcome(isWon() ? GameOutcomeEnum.WIN : GameOutcomeEnum.LOSS)
                 .setScore(score);
 
         this.gameRepository.save(game);
-        // TODO: get current logged user
-        Player loggedUser = this.playerRepository.findById(1L).orElseThrow(NoSuchElementException::new);
+        Player loggedUser = this.playerRepository.findByEmail(email).orElseThrow(NoSuchElementException::new);
         loggedUser.getGamesPlayed().add(game);
         loggedUser.setScore(loggedUser.getScore() + score);
+        this.playerRepository.save(loggedUser);
     }
 
     public Long calculateScore(){
@@ -140,12 +140,18 @@ public class GameService {
         return score;
     }
 
-    public Long geTotalScore(){
+    public Long getTotalScore(String email){
 
-        //TODO: Separate method for getting logged user
-        Player loggedUser = this.playerRepository.findById(1L).orElseThrow(NoSuchElementException::new);
+        Player loggedUser = this.playerRepository.findByEmail(email).orElseThrow(NoSuchElementException::new);
 
         return loggedUser.getScore();
     }
 
+    public String getHiddenWord() {
+        return hiddenWord;
+    }
+
+    public Set<Character> getUsedLetters() {
+        return usedLetters;
+    }
 }

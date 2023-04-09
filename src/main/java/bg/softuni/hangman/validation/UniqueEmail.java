@@ -9,15 +9,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-@Constraint(validatedBy = PasswordMatcher.class)
-public @interface PasswordMatch {
-
-    String password();
-
-    String confirmPassword();
-
-    String message() default "Passwords mismatch";
+@Target(ElementType.FIELD)
+@Constraint(validatedBy = UniqueEmailCheck.class)
+public @interface UniqueEmail {
+    String message() default "Имейлът вече съществува";
 
     Class<?>[] groups() default {};
 

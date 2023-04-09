@@ -1,5 +1,6 @@
 package bg.softuni.hangman.config;
 
+import bg.softuni.hangman.model.constant.PlayerRoleEnum;
 import bg.softuni.hangman.repository.PlayerRepository;
 import bg.softuni.hangman.service.ApplicationUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -28,7 +29,9 @@ public class SecurityConfiguration {
         // allow access to all static files (images, CSS, js)
             requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
         // the URL-s below are available for all users - logged in and anonymous
-            requestMatchers("/", "/login", "/register", "/login-error").permitAll().
+            requestMatchers("/", "/login", "/register", "/login-error").anonymous().
+            // only for admins
+                    requestMatchers("/admin").hasRole(PlayerRoleEnum.ADMIN.name()).
         anyRequest().authenticated().
         and().
         // configure login with HTML form
