@@ -1,8 +1,11 @@
 package bg.softuni.hangman.model.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
 import org.modelmapper.internal.bytebuddy.implementation.bind.annotation.Default;
+import org.springframework.data.repository.cdi.Eager;
 
+import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,7 +38,7 @@ public class Player extends BaseEntity {
     private Long score;
 
     @Column(name = "games_played")
-    @OneToMany(mappedBy = "id") //??
+    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER) //??
     private List<Game> gamesPlayed;
 
 //    @Column

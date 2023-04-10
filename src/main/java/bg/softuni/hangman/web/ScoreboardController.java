@@ -1,12 +1,12 @@
 package bg.softuni.hangman.web;
 
-import bg.softuni.hangman.model.dto.ScoreboardPlayersDto;
 import bg.softuni.hangman.service.ScoreboardService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 //TODO
 
@@ -18,12 +18,25 @@ public class ScoreboardController {
         this.scoreboardService = scoreboardService;
     }
 
+//    @GetMapping("/scoreboard")
+//    public String getScoreboard(Model model) {
+//        List<ScoreboardPlayersDto> scoreboard = scoreboardService.getScoreboard();
+//
+//        model.addAttribute("scoreboard",scoreboard);
+//
+//        return "todo/scoreboard";
+//    }
+
     @GetMapping("/scoreboard")
-    public String getScoreboard(Model model) {
-        List<ScoreboardPlayersDto> scoreboard = scoreboardService.getScoreboard();
+    public String getAllOffers(Model model,
+                               @PageableDefault(
+                                       sort = "score", direction = Sort.Direction.DESC
+                               ) Pageable pageable) {
 
-        model.addAttribute("scoreboard",scoreboard);
+        var playerScores = scoreboardService.getPlayerScores(pageable);
 
-        return "todo/scoreboard";
+        model.addAttribute("players", playerScores);
+
+        return "scoreboard";
     }
 }

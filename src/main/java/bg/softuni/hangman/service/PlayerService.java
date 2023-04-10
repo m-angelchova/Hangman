@@ -73,4 +73,19 @@ public class PlayerService {
         Player player = this.playerRepository.findByEmail(playerEmail).orElseThrow(NoSuchElementException::new);
         player.getRoles().add(getAdminRole());
     }
+
+    public void changeEmail(String oldEmail, String newEmail){
+        Player player = this.playerRepository.findByEmail(oldEmail).orElseThrow(NoSuchElementException::new);
+
+        if (this.playerRepository.findByEmail(newEmail).isEmpty()){
+            player.setEmail(newEmail);
+            playerRepository.save(player);
+        }
+
+        //else ?, error ?, validation ? dto + email validation?
+    }
+
+    public Player getPlayer(String email) {
+        return this.playerRepository.findByEmail(email).orElseThrow(NoSuchElementException::new);
+    }
 }

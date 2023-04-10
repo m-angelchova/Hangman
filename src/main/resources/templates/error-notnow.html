@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/head}">
+</head>
+<body>
+
+<div class="container-fluid">
+  <h1 class="text-center text-white mt-5">ГРЕШКА! <div th:text="${error}"/></h1>
+  <h3 class="text-center text-white mt-5">Натиснете тук, за да се върнете в началната страница:</h3>
+  <a href="/"><img alt="hangman" th:src="@{/images/logo.png}" class="logo-header"></a>
+</div>
+
+<div>
+  <footer></footer>
+</div>
+
+</body>
+</html>
