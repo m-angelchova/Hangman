@@ -23,8 +23,7 @@ public class EmailService {
         this.templateEngine = templateEngine;
     }
 
-    public void sendRegistrationEmail(String userEmail, String fullName
-    ) {
+    public void sendRegistrationEmail(String userEmail, String fullName) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);

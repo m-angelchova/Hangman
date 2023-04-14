@@ -37,19 +37,20 @@ public class Player extends BaseEntity {
     @Column
     private Long score;
 
-    @Column(name = "games_played")
-    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER) //??
+//    @Column(name = "games_played")
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "players_games",
+            joinColumns = { @JoinColumn(name = "player_id") },
+            inverseJoinColumns = { @JoinColumn(name = "game_id") }
+    )
     private List<Game> gamesPlayed;
 
-//    @Column
-//    private Boolean isAccountActive;
 
-    //Constructor:
 
     public Player() {
         gamesPlayed = new LinkedList<>(); //to keep the games chronologically
         score = 0L;
-//        isAccountActive = false;
     }
 
     //Getters and Setters:

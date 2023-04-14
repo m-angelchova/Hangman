@@ -61,7 +61,7 @@ public class PlayerService {
     }
 
 
-    public List<PlayerRole> defaultPlayerRoles(){
+    public List<PlayerRole> defaultPlayerRoles() throws NoSuchElementException {
         return List.of(this.roleRepository.findByRole(PlayerRoleEnum.USER).orElseThrow(NoSuchElementException::new));
     }
 
@@ -69,12 +69,12 @@ public class PlayerService {
         return this.roleRepository.findByRole(PlayerRoleEnum.ADMIN).orElseThrow(NoSuchElementException::new);
     }
 
-    public void promoteToAdmin(String playerEmail){
+    public void promoteToAdmin(String playerEmail) throws NoSuchElementException {
         Player player = this.playerRepository.findByEmail(playerEmail).orElseThrow(NoSuchElementException::new);
         player.getRoles().add(getAdminRole());
     }
 
-    public void changeEmail(String oldEmail, String newEmail){
+    public void changeEmail(String oldEmail, String newEmail) throws NoSuchElementException {
         Player player = this.playerRepository.findByEmail(oldEmail).orElseThrow(NoSuchElementException::new);
 
         if (this.playerRepository.findByEmail(newEmail).isEmpty()){
@@ -85,7 +85,7 @@ public class PlayerService {
         //else ?, error ?, validation ? dto + email validation?
     }
 
-    public Player getPlayer(String email) {
+    public Player getPlayer(String email) throws NoSuchElementException {
         return this.playerRepository.findByEmail(email).orElseThrow(NoSuchElementException::new);
     }
 }

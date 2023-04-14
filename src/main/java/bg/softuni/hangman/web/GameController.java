@@ -1,81 +1,89 @@
 package bg.softuni.hangman.web;
 
 import bg.softuni.hangman.model.dto.DictionaryDto;
+import bg.softuni.hangman.model.dto.GamePlayDto;
+import bg.softuni.hangman.model.dto.PlayerRegisterDto;
 import bg.softuni.hangman.service.GameService;
+import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class GameController {
-    // TODO - UI
 
     private final GameService gameService;
+    public static final String BINDING_RESULT_PATH = "org.springframework.validation.BindingResult.";
 
     public GameController(GameService gameService) {
         this.gameService = gameService;
     }
 
-    @GetMapping("/game/play")
-    public String playGame() {
-        return "todo/game";
+    @GetMapping("/play")
+    public String playGame(Model model) {
+        this.gameService.gameSetup();
+        model.addAttribute("hiddenWord", gameService.getHiddenWord());
+//        model.addAttribute("usedLetters", gameService.getUsedLetters());
+        model.addAttribute("remainingGuesses", 6 - gameService.getWrongGuesses());
+        return "game";
     }
 
-    @PostMapping("/game/play")
-    public String playGame(RedirectAttributes redirectAttributes,
-                           @RequestParam char letter,
-                           @AuthenticationPrincipal UserDetails user) {
-        String outcome = this.gameService.playGame(letter);
+
+
+
+
+
+    @PostMapping("/play")
+    public String playGame(@Valid @ModelAttribute(name = "gamePlayDto") GamePlayDto gamePlayDto,
+                           BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("gamePlayDto", gamePlayDto)
+                    .addFlashAttribute(BINDING_RESULT_PATH + "gamePlayDto", bindingResult);
+
+            return "redirect:/play";
+        }
+
+        //RequestBody char letter RequestParam
+
+        System.out.println(gamePlayDto.getLetter());
+        String outcome = this.gameService.playGame(gamePlayDto.getLetter().charAt(0));
+        String message;
 
         // TODO
 
         switch (outcome) {
-            case "used letter" -> {
-                return "redirect:/game/play";
-            }
-            case "Win", "Loss" -> {
-                return "redirect:/game/end";
-            }
-            case "right" -> {
+            case "used letter", "right", "wrong" -> {
 
-                String dosmth;
-                return "redirect:/game/play";
+                if (outcome.equals("used letter")){
+                    message = "You already used this letter";
+                }else if ((outcome.equals("right"))) {
+                    message = String.format("Correct guess! %d attempts remaining!",  6 - gameService.getWrongGuesses());
+                }else {
+                    message = String.format("Wrong guess! %d attempts remaining!",  6 - gameService.getWrongGuesses());
+                }
+
+                redirectAttributes.addFlashAttribute("message", message);
+
+                return "redirect:/play";
             }
+
             default -> {
-                //wrong
-                String dosmthElse = "1";
-                return "redirect:/game/play";
-
+                return "redirect:/outcome";
             }
+
         }
     }
 
-    @GetMapping("/game/end")
-    public String winLossScreen(@AuthenticationPrincipal UserDetails user,
-                                Model model) {
-
-        // TODO: shows word + score + totalscore
-
-        gameService.saveGame(user.getUsername());
-
-        Long score = gameService.calculateScore();
-        Long totalScore = gameService.getTotalScore(user.getUsername());
-        DictionaryDto dictionary = gameService.getDictionary();
-
-        model.addAttribute("dictionary", dictionary);
-        model.addAttribute("score", score);
-        model.addAttribute("totalScore", totalScore);
-
-
-        if (gameService.isWon()) {
-            return "redirect:/todo/win";
-        } else {
-            return "redirect:/todo/loss";
-        }
+    @ModelAttribute(name = "gamePlayDto")
+    public GamePlayDto innitGamePlayDto() {
+        return new GamePlayDto();
     }
+
+
+
 }

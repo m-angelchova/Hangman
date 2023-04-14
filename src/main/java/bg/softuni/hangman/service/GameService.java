@@ -13,10 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class GameService {
@@ -31,7 +28,6 @@ public class GameService {
     private int wrongGuesses;
     private Set<Character> usedLetters;
     private Dictionary dictionary;
-    private Boolean isGameSet;
     private String currentOutcome;
     private final Logger LOGGER = LoggerFactory.getLogger(GameService.class);
 
@@ -44,10 +40,7 @@ public class GameService {
         this.modelMapper = modelMapper;
     }
 
-    public String playGame(char letter){
-        if (!isGameSet) {
-            gameSetup();
-        }
+    public String playGame(char letter) {
 
         if (usedLetters.contains(letter)) {
             return "used letter";
@@ -57,7 +50,7 @@ public class GameService {
 
         if (isWon()) {
             return "Win";
-        } else if (isLost()){
+        } else if (isLost()) {
             return "Loss";
         } else {
             return currentOutcome;
@@ -66,36 +59,41 @@ public class GameService {
 
 
     public void gameSetup() {
-        // Select a word
-        Random random = new Random();
-        Long randomNumber = random.nextLong(1,5);
-        //todo bonus: make sure word doesn't repeat
 
-        dictionary = this.dictionaryRepository.findById(randomNumber).orElseThrow(NoSuchElementException::new);
-        word = dictionary.getWord();
-        hiddenWord = "-".repeat(word.length());
-        wrongGuesses = 0;
-        usedLetters = new HashSet<>();
-        isGameSet = true;
+        if (hiddenWord == null) {
 
-        LOGGER.info("The random word is: " + word);
+            // Select a word
+            Random random = new Random();
+            Long randomNumber = random.nextLong(1, 5);
+            //todo bonus: make sure word doesn't repeat
+
+            dictionary = this.dictionaryRepository.findById(randomNumber).orElseThrow(NoSuchElementException::new);
+            word = dictionary.getWord();
+            hiddenWord = "-".repeat(word.length());
+            wrongGuesses = 0;
+            usedLetters = new HashSet<>();
+
+            LOGGER.info("The random word is: " + word);
+        }
     }
 
-    public boolean makeGuess(char letter) {
+    public String makeGuess(char letter) {
         usedLetters.add(letter);
 
         if (word.indexOf(letter) == -1) {
             currentOutcome = "wrong";
             wrongGuesses++;
-            return false;
+            return currentOutcome;
         }
-        currentOutcome = "right";;
+        currentOutcome = "right";
+        ;
         for (int i = 0; i < word.length(); i++) {
             if (word.charAt(i) == letter) {
                 hiddenWord = hiddenWord.substring(0, i) + letter + hiddenWord.substring(i + 1);
             }
         }
-        return true;
+
+        return currentOutcome;
     }
 
     public boolean isWon() {
@@ -106,44 +104,48 @@ public class GameService {
         return wrongGuesses >= MAX_WRONG_GUESSES;
     }
 
-    public DictionaryDto getDictionary(){
+    public DictionaryDto getDictionary() {
         return this.modelMapper.map(dictionary, DictionaryDto.class);
     }
 
-    public void saveGame(String email){
+    public void saveGame(String email) throws NoSuchElementException {
 
-        Long score = isWon() ? calculateScore() : 0L;
+        Long score = calculateScore();
 
         Game game = new Game().setDictionary(dictionary)
                 .setOutcome(isWon() ? GameOutcomeEnum.WIN : GameOutcomeEnum.LOSS)
                 .setScore(score);
 
         this.gameRepository.save(game);
+
         Player loggedUser = this.playerRepository.findByEmail(email).orElseThrow(NoSuchElementException::new);
-        loggedUser.getGamesPlayed().add(game);
+        List<Game> gamesPlayed = loggedUser.getGamesPlayed();
+        gamesPlayed.add(game);
+        loggedUser.setGamesPlayed(gamesPlayed);
         loggedUser.setScore(loggedUser.getScore() + score);
         this.playerRepository.save(loggedUser);
     }
 
-    public Long calculateScore(){
+    public Long calculateScore() {
         Long score;
 
-        switch (wrongGuesses){
+        switch (wrongGuesses) {
             case 0 -> score = 200L;
             case 1 -> score = 150L;
             case 2 -> score = 100L;
             case 3 -> score = 80L;
             case 4 -> score = 50L;
-            default -> score = 20L;
+            case 5 -> score = 20L;
+            default -> score = 0L;
         }
 
         return score;
     }
 
-    public Long getTotalScore(String email){
+    public Long getTotalScore(String email) throws NoSuchElementException {
 
         Player loggedUser = this.playerRepository.findByEmail(email).orElseThrow(NoSuchElementException::new);
-
+        gameRestart();
         return loggedUser.getScore();
     }
 
@@ -151,7 +153,36 @@ public class GameService {
         return hiddenWord;
     }
 
-    public Set<Character> getUsedLetters() {
-        return usedLetters;
+    public String getUsedLetters() {
+
+        if (usedLetters.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        usedLetters.forEach(l -> sb.append(l + " "));
+
+        return sb.toString().trim();
+    }
+
+    public int getWrongGuesses() {
+        return wrongGuesses;
+    }
+
+    public GameService setWrongGuesses(int wrongGuesses) {
+        this.wrongGuesses = wrongGuesses;
+        return this;
+    }
+
+
+    private void gameRestart() {
+
+        dictionary = null;
+        word = null;
+        hiddenWord = null;
+        wrongGuesses = 0;
+        usedLetters = null;
+
     }
 }
+

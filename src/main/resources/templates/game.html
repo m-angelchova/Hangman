@@ -1,10 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Game</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/head}">
 </head>
 <body>
+
+<div>
+    <nav th:replace="~{/fragments/navigation}"></nav>
+</div>
+
+<div class="game-container">
+    <div th:switch="${remainingGuesses}">
+        <img th:case="1" alt="hangman-1" th:src="@{/images/5-01.png}" class="game-image">
+        <img th:case="2" alt="hangman-1" th:src="@{/images/4-01.png}" class="game-image">
+        <img th:case="3" alt="hangman-1" th:src="@{/images/3-01.png}" class="game-image">
+        <img th:case="4" alt="hangman-1" th:src="@{/images/2-01.png}" class="game-image">
+        <img th:case="5" alt="hangman-1" th:src="@{/images/1-01.png}" class="game-image">
+        <img th:case="*" alt="hangman-1" th:src="@{/images/0.png}" class="game-image">
+    </div>
+
+
+    <div class="info-container">
+
+        <h1 class="text-center text-white mt-5" th:text="${hiddenWord}"/>
+        <h5 class="text-center text-white mt-5">Оставащи опити:
+            <div class="d-inline" th:text="${remainingGuesses}"/>
+        </h5>
+        <h5 class="text-center text-white mt-5">Използвани букви:
+            <div class="d-inline" th:text="${usedLetters}"/>
+        </h5>
+
+
+        <div class="submit-letter">
+            <form th:method="POST"
+                  th:action="@{/play}"
+                  th:object="${gamePlayDto}"
+                  class="form-inline">
+
+
+                <label th:for="letter"
+                       class="text-white font-weight-bold"></label>
+                <div class="under">
+                    <p th:if="${#fields.hasErrors('letter')}"
+                       class="errors alert alert-danger ">
+                        Въведете само една буква!
+                    </p>
+
+                    <input type="text"
+                           th:field="*{letter}"
+                           class="form-control mb-2 mr-sm-2"
+                           placeholder="Въведи буква тук"/>
+                </div>
+                <div class="button-holder d-inline">
+                    <input type="submit" class="btn btn-info btn-lg" value="Познай"/>
+                </div>
+
+            </form>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<div>
+    <footer></footer>
+</div>
 
 </body>
 </html>

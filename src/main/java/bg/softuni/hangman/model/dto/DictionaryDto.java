@@ -9,7 +9,7 @@ public class DictionaryDto {
 
     @NotNull
     @Size(max = 500)
-    private String description;
+    private String definition;
 
     public String getWord() {
         return word;
@@ -20,12 +20,12 @@ public class DictionaryDto {
         return this;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDefinition() {
+        return definition;
     }
 
-    public DictionaryDto setDescription(String description) {
-        this.description = description;
+    public DictionaryDto setDefinition(String definition) {
+        this.definition = definition;
         return this;
     }
 }

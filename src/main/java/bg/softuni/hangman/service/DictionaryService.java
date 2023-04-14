@@ -27,7 +27,7 @@ public class DictionaryService {
     public void addWord(DictionaryDto dto){
         Dictionary dictionary = new Dictionary()
                 .setWord(dto.getWord())
-                .setDefinition(dto.getDescription());
+                .setDefinition(dto.getDefinition());
 
         this.dictionaryRepository.save(dictionary);
     }

@@ -31,7 +31,7 @@ public class SecurityConfiguration {
         // the URL-s below are available for all users - logged in and anonymous
             requestMatchers("/", "/login", "/register", "/login-error").anonymous().
             // only for admins
-                    requestMatchers("/admin").hasRole(PlayerRoleEnum.ADMIN.name()).
+            requestMatchers("/admin").hasRole(PlayerRoleEnum.ADMIN.name()).
         anyRequest().authenticated().
         and().
         // configure login with HTML form

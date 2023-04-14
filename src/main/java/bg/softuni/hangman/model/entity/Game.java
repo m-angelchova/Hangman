@@ -20,6 +20,10 @@ public class Game extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private GameOutcomeEnum outcome;
 
+
+
+
+
     public Dictionary getDictionary() {
         return dictionary;
     }
