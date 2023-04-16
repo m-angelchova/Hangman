@@ -32,14 +32,8 @@ public class ProfileController {
     @GetMapping("/profile")
     public String getProfile(Model model,
                              @AuthenticationPrincipal UserDetails user) {
-
-
-        //TODO: 1. Hi, *Name*; 2. Your max score is: ** 3. Your recent games ** 4. Change username
-
         PlayerProfileDto player = profileService.getPlayer(user.getUsername());
         model.addAttribute("player", player);
-
-
         return "profile";
     }
 
@@ -68,8 +62,5 @@ public class ProfileController {
     public EmailForSettingsDto innitEmailForSettingsDto() {
         return new EmailForSettingsDto();
     }
-
-
-
 
 }

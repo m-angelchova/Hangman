@@ -52,27 +52,26 @@ public class PlayerService {
     }
 
 
-    public List<PlayerRole> defaultPlayerRoles() throws NoSuchElementException {
+    public List<PlayerRole> defaultPlayerRoles() {
         return List.of(this.roleRepository.findByRole(PlayerRoleEnum.USER).orElseThrow(NoSuchElementException::new));
     }
 
-    public PlayerRole getAdminRole() throws NoSuchElementException {
+    public PlayerRole getAdminRole() {
         return this.roleRepository.findByRole(PlayerRoleEnum.ADMIN).orElseThrow(NoSuchElementException::new);
     }
 
     @Transactional
-    public void promoteToAdmin(String playerEmail) throws NoSuchElementException {
+    public void promoteToAdmin(String playerEmail) {
         Player player = this.playerRepository.findByEmail(playerEmail).orElseThrow(NoSuchElementException::new);
         player.getRoles().add(getAdminRole());
         playerRepository.save(player);
     }
 
     @Transactional
-    public void removeAdmin(String playerEmail) throws NoSuchElementException {
+    public void removeAdmin(String playerEmail) {
         Player player = this.playerRepository.findByEmail(playerEmail).orElseThrow(NoSuchElementException::new);
         player.getRoles().remove(getAdminRole());
         playerRepository.save(player);
     }
-
 
 }

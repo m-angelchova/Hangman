@@ -22,18 +22,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class RegistrationController {
 
   private final PlayerService playerService;
-  private final SecurityContextRepository contextRepository;
-
   public static final String BINDING_RESULT_PATH = "org.springframework.validation.BindingResult.";
 
 
-  public RegistrationController(PlayerService playerService, SecurityContextRepository contextRepository) {
+  public RegistrationController(PlayerService playerService) {
     this.playerService = playerService;
-    this.contextRepository = contextRepository;
   }
 
 
-  @GetMapping("/register") // post method localhost:8080/users/register
+  @GetMapping("/register")
   public String getRegister(Model model) {
     return "auth-register";
   }
@@ -52,13 +49,9 @@ public class RegistrationController {
 
     playerService.registerPlayer(playerRegisterDto);
 
-
     return "redirect:/login";
   }
 
-
-
-  // Model attributes
 
   @ModelAttribute(name = "playerRegisterDto")
   public PlayerRegisterDto initUserRegisterFormDto() {

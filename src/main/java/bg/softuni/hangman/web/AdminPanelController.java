@@ -16,7 +16,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AdminPanelController {
-    //TODO: Page for admin options - make user admins + add words + optional: ban users
+
+    //TODO: success messages across the post mappings
+
     private final PlayerService playerService;
     private final DictionaryService dictionaryService;
     public static final String BINDING_RESULT_PATH = "org.springframework.validation.BindingResult.";
@@ -69,8 +71,6 @@ public class AdminPanelController {
 
         this.dictionaryService.removeWord(dictionaryToRemoveDto);
         redirectAttributes.addFlashAttribute("message", "Success!");
-
-        //success message?
         return "redirect:/admin";
     }
 

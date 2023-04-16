@@ -1,36 +1,29 @@
 package bg.softuni.hangman.service;
 
 
-import bg.softuni.hangman.model.AppUserDetails;
 import bg.softuni.hangman.model.dto.GameProfileDto;
 import bg.softuni.hangman.model.dto.PlayerProfileDto;
 import bg.softuni.hangman.model.entity.Game;
 import bg.softuni.hangman.model.entity.Player;
 import bg.softuni.hangman.repository.GameRepository;
 import bg.softuni.hangman.repository.PlayerRepository;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ProfileService {
     private final PlayerRepository playerRepository;
-    private final GameRepository gameRepository;
 
 
-    public ProfileService(PlayerRepository playerRepository, GameRepository gameRepository) {
+
+    public ProfileService(PlayerRepository playerRepository) {
         this.playerRepository = playerRepository;
-        this.gameRepository = gameRepository;
+
     }
 
-    public PlayerProfileDto getPlayer(String email) throws NoSuchElementException {
+    public PlayerProfileDto getPlayer(String email) {
         Player player = this.playerRepository.findByEmail(email).orElseThrow(NoSuchElementException::new);
 
         return new PlayerProfileDto().setFullName(player.getFirstName() + " " + player.getLastName())
@@ -38,7 +31,7 @@ public class ProfileService {
                 .setGamesPlayed(getGamesPlayed(player));
     }
 
-    public List<GameProfileDto> getGamesPlayed(Player player) throws NoSuchElementException {
+    public List<GameProfileDto> getGamesPlayed(Player player) {
 
         List<Game> gamesPlayed = player.getGamesPlayed();
 
@@ -65,7 +58,7 @@ public class ProfileService {
                 .setScore(game.getScore());
     }
 
-    public void changeEmail(UserDetails user, String newEmail) throws NoSuchElementException {
+    public void changeEmail(UserDetails user, String newEmail) {
         Player player = this.playerRepository.findByEmail(user.getUsername()).orElseThrow(NoSuchElementException::new);
 
 

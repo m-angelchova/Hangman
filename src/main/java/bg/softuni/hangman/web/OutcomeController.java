@@ -21,7 +21,6 @@ public class OutcomeController {
     public String winLossScreen(@AuthenticationPrincipal UserDetails user,
                                 Model model) {
 
-        // TODO: shows word + score + totalscore
         String result;
         if (gameService.isWon()) {
             result = "WIN";
@@ -42,7 +41,5 @@ public class OutcomeController {
 
         return "outcome";
     }
-
-
 
 }

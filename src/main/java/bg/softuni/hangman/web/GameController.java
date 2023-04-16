@@ -32,10 +32,6 @@ public class GameController {
         return "game";
     }
 
-    // TODO>: used letters
-
-
-
 
     @PostMapping("/play")
     public String playGame(@Valid @ModelAttribute(name = "gamePlayDto") GamePlayDto gamePlayDto,
@@ -52,7 +48,7 @@ public class GameController {
         String outcome = this.gameService.playGame(gamePlayDto.getLetter().charAt(0));
         String message;
 
-        // TODO
+        // TODO : Notifications // messages
 
         switch (outcome) {
             case "used letter", "right", "wrong" -> {
@@ -81,7 +77,5 @@ public class GameController {
     public GamePlayDto innitGamePlayDto() {
         return new GamePlayDto();
     }
-
-
 
 }

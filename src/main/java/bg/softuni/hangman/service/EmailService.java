@@ -47,22 +47,10 @@ public class EmailService {
         ctx.setLocale(Locale.getDefault());
         ctx.setVariable("fullName", fullName);
 
-//        String userCode = generateActivationCode();
-//        String activationLink = "http://localhost:8080/activate?code=" + userCode;
-//
-//        ctx.setVariable("activationLink", activationLink);
+
 
         return templateEngine.process("email/registration", ctx);
     }
 
-    private String generateActivationCode() {
-        return UUID.randomUUID().toString();
-    }
-
-
-
-//    private void connectUserToCode(){
-//
-//    }
 
 }

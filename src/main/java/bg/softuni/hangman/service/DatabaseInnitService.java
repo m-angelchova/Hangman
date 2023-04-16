@@ -58,33 +58,25 @@ public class DatabaseInnitService {
                     .setFirstName("Admin").setLastName("Adminov")
                     .setPassword(passwordEncoder.encode(DEFAULT_PASSWORD))
                     .setScore(400L)
-                    .setRoles(getAdminRoles())
-//                    .setAccountActive(true)
-                    ;
+                    .setRoles(getAdminRoles());
 
             Player userOne = new Player().setEmail("userOne@example.com")
                     .setFirstName("One").setLastName("Player")
                     .setPassword(passwordEncoder.encode(DEFAULT_PASSWORD))
                     .setScore(900L)
-                    .setRoles(playerService.defaultPlayerRoles())
-//                    .setAccountActive(true)
-                    ;
+                    .setRoles(playerService.defaultPlayerRoles());
 
             Player userTwo = new Player().setEmail("userTwo@example.com")
                     .setFirstName("Two").setLastName("Player")
                     .setPassword(passwordEncoder.encode(DEFAULT_PASSWORD))
                     .setScore(150L)
-                    .setRoles(playerService.defaultPlayerRoles())
-//                    .setAccountActive(true)
-                    ;
+                    .setRoles(playerService.defaultPlayerRoles());
 
             Player userThree = new Player().setEmail("userThree@example.com")
                     .setFirstName("Three").setLastName("Player")
                     .setPassword(passwordEncoder.encode(DEFAULT_PASSWORD))
                     .setScore(550L)
-                    .setRoles(playerService.defaultPlayerRoles())
-//                    .setAccountActive(true)
-                    ;
+                    .setRoles(playerService.defaultPlayerRoles());
 
             this.playerRepository.save(admin);
             this.playerRepository.save(userOne);

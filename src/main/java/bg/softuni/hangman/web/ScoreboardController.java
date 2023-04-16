@@ -18,14 +18,6 @@ public class ScoreboardController {
         this.scoreboardService = scoreboardService;
     }
 
-//    @GetMapping("/scoreboard")
-//    public String getScoreboard(Model model) {
-//        List<ScoreboardPlayersDto> scoreboard = scoreboardService.getScoreboard();
-//
-//        model.addAttribute("scoreboard",scoreboard);
-//
-//        return "todo/scoreboard";
-//    }
 
     @GetMapping("/scoreboard")
     public String getAllOffers(Model model,

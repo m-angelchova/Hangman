@@ -38,8 +38,4 @@ public class ScoreboardService {
                 .setScore(player.getScore());
     }
 
-
-
-
-
 }

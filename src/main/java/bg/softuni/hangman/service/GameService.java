@@ -59,7 +59,7 @@ public class GameService {
     }
 
 
-    public void gameSetup() throws NoSuchElementException{
+    public void gameSetup(){
 
         if (hiddenWord == null) {
 
@@ -108,7 +108,7 @@ public class GameService {
         return this.modelMapper.map(dictionary, DictionaryDto.class);
     }
 
-    public void saveGame(String email) throws NoSuchElementException {
+    public void saveGame(String email) {
 
         Long score = calculateScore();
 
@@ -142,7 +142,7 @@ public class GameService {
         return score;
     }
 
-    public Long getTotalScore(String email) throws NoSuchElementException {
+    public Long getTotalScore(String email)  {
 
         Player loggedUser = this.playerRepository.findByEmail(email).orElseThrow(NoSuchElementException::new);
         gameRestart();
@@ -169,10 +169,6 @@ public class GameService {
         return wrongGuesses;
     }
 
-    public GameService setWrongGuesses(int wrongGuesses) {
-        this.wrongGuesses = wrongGuesses;
-        return this;
-    }
 
 
     private void gameRestart() {

@@ -49,16 +49,5 @@ public class ApplicationUserDetailsService implements UserDetailsService {
         return new SimpleGrantedAuthority("ROLE_" + role.getRole().name());
     }
 
-    private void setUsername(AppUserDetails user, String username){
-
-         user =  new AppUserDetails(
-                username,
-                user.getPassword(),
-                user.getAuthorities()
-        ).setFirstName(user.getFirstName())
-                .setScore(user.getScore());
-    }
-
-
 
 }
