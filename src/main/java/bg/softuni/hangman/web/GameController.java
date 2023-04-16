@@ -27,12 +27,12 @@ public class GameController {
     public String playGame(Model model) {
         this.gameService.gameSetup();
         model.addAttribute("hiddenWord", gameService.getHiddenWord());
-//        model.addAttribute("usedLetters", gameService.getUsedLetters());
+        model.addAttribute("usedLetters", gameService.getUsedLetters());
         model.addAttribute("remainingGuesses", 6 - gameService.getWrongGuesses());
         return "game";
     }
 
-
+    // TODO>: used letters
 
 
 
@@ -48,9 +48,7 @@ public class GameController {
             return "redirect:/play";
         }
 
-        //RequestBody char letter RequestParam
 
-        System.out.println(gamePlayDto.getLetter());
         String outcome = this.gameService.playGame(gamePlayDto.getLetter().charAt(0));
         String message;
 

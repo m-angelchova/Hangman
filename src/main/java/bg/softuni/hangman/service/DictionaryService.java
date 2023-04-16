@@ -1,8 +1,10 @@
 package bg.softuni.hangman.service;
 
 import bg.softuni.hangman.model.dto.DictionaryDto;
+import bg.softuni.hangman.model.dto.DictionaryToRemoveDto;
 import bg.softuni.hangman.model.entity.Dictionary;
 import bg.softuni.hangman.repository.DictionaryRepository;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -24,20 +26,32 @@ public class DictionaryService {
         wordId = 0L;
     }
 
-    public void addWord(DictionaryDto dto){
-        Dictionary dictionary = new Dictionary()
-                .setWord(dto.getWord())
-                .setDefinition(dto.getDefinition());
+    public void addWord(DictionaryDto dto) {
 
-        this.dictionaryRepository.save(dictionary);
+        if (this.dictionaryRepository.findByWord(dto.getWord()).isEmpty()) {
+
+            Dictionary dictionary = new Dictionary()
+                    .setWord(dto.getWord())
+                    .setDefinition(dto.getDefinition());
+
+            this.dictionaryRepository.save(dictionary);
+        }
     }
 
-   // @Scheduled(cron = "0 0 0 * * *")
-    public void selectWordOfTheDay(){
+    @Transactional
+    public void removeWord(DictionaryToRemoveDto dto) {
+        if (this.dictionaryRepository.findByWord(dto.getWord()).isPresent()) {
+
+            this.dictionaryRepository.deleteByWord(dto.getWord());
+        }
+    }
+
+    @Scheduled(cron = "0 0 0 * * *")
+    public void selectWordOfTheDay() {
         Random random = new Random();
         Long randomNumber = random.nextLong(1, dictionaryRepository.count() + 1);
 
-        if (wordId.equals(randomNumber)){
+        if (wordId.equals(randomNumber)) {
             randomNumber = random.nextLong(1, dictionaryRepository.count() + 1);
         }
         wordOfTheDay = this.dictionaryRepository.findById(randomNumber).orElseThrow(NoSuchElementException::new);
@@ -46,7 +60,7 @@ public class DictionaryService {
     }
 
     public Dictionary getWordOfTheDay() {
-        selectWordOfTheDay();
+        selectWordOfTheDay(); //just for test/visualisation purposes
         return wordOfTheDay;
     }
 }

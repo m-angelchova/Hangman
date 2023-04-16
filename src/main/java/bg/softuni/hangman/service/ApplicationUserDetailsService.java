@@ -16,35 +16,49 @@ import java.util.List;
 
 public class ApplicationUserDetailsService implements UserDetailsService {
 
-  private final PlayerRepository playerRepository;
+    private final PlayerRepository playerRepository;
 
-  public ApplicationUserDetailsService(PlayerRepository playerRepository) {
-    this.playerRepository = playerRepository;
-  }
+    public ApplicationUserDetailsService(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
+    }
 
-  @Override
-  @Transactional
-  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    return
-        playerRepository.
-            findByEmail(email).
-            map(this::map).
-            orElseThrow(() -> new UsernameNotFoundException("Player with email " + email + " not found!"));
-  }
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return
+                playerRepository.
+                        findByEmail(email).
+                        map(this::map).
+                        orElseThrow(() -> new UsernameNotFoundException("Player with email " + email + " not found!"));
+    }
 
-  private UserDetails map(Player player) {
-    return new AppUserDetails(
-        player.getEmail(),
-        player.getPassword(),
-        extractAuthorities(player)
-    ).setFirstName(player.getFirstName()).setScore(player.getScore());
-  }
+    private UserDetails map(Player player) {
+        return new AppUserDetails(
+                player.getEmail(),
+                player.getPassword(),
+                extractAuthorities(player)
+        ).setFirstName(player.getFirstName())
+                .setScore(player.getScore());
+    }
 
-  private List<GrantedAuthority> extractAuthorities(Player player) {
-    return player.getRoles().stream().map(this::mapRole).toList();
-  }
+    private List<GrantedAuthority> extractAuthorities(Player player) {
+        return player.getRoles().stream().map(this::mapRole).toList();
+    }
 
-  private GrantedAuthority mapRole(PlayerRole role) {
-    return new SimpleGrantedAuthority("ROLE_" + role.getRole().name());
-  }
+    private GrantedAuthority mapRole(PlayerRole role) {
+        return new SimpleGrantedAuthority("ROLE_" + role.getRole().name());
+    }
+
+    private void setUsername(AppUserDetails user, String username){
+
+         user =  new AppUserDetails(
+                username,
+                user.getPassword(),
+                user.getAuthorities()
+        ).setFirstName(user.getFirstName())
+                .setScore(user.getScore());
+    }
+
+
+
 }

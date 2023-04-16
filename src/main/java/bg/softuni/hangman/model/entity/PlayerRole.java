@@ -1,6 +1,6 @@
 package bg.softuni.hangman.model.entity;
 
-import bg.softuni.hangman.model.constant.PlayerRoleEnum;
+import bg.softuni.hangman.model.enums.PlayerRoleEnum;
 import jakarta.persistence.*;
 
 @Entity

@@ -33,7 +33,7 @@
 
                 <p th:if="${#fields.hasErrors('firstName')}"
                    class="errors alert alert-danger">
-                    Въведете име.
+                    Въведете валидно име.
                 </p>
 
             </div>
@@ -51,7 +51,7 @@
 
                 <p th:if="${#fields.hasErrors('lastName')}"
                    class="errors alert alert-danger">
-                    Въведете фамилия.
+                    Въведете валидна фамилия.
                 </p>
             </div>
         </div>
@@ -71,7 +71,7 @@
                        />
                 <p th:if="${#fields.hasErrors('email')}"
                    class="errors alert alert-danger">
-                    Въведете имейл.
+                    Имейлът е невалиден или зает.
                 </p>
             </div>
         </div>
@@ -92,7 +92,7 @@
                        th:value="*{password}"/>
                 <p th:if="${#fields.hasErrors('password')}"
                    class="errors alert alert-danger">
-                    Въведете парола.
+                    Въведете валидна парола.
                 </p>
             </div>
 

@@ -1,9 +1,11 @@
 package bg.softuni.hangman.web;
 
-import bg.softuni.hangman.model.dto.DictionaryDto;
+import bg.softuni.hangman.model.AppUserDetails;
+import bg.softuni.hangman.model.dto.*;
 import bg.softuni.hangman.service.DictionaryService;
 import bg.softuni.hangman.service.PlayerService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,41 +28,108 @@ public class AdminPanelController {
 
     @GetMapping("/admin")
     public String adminPage(){
-        return "todo/admin";
+        return "admin";
     }
 
-//    @PostMapping("/admin")
-//    public String addWord(@Valid @ModelAttribute(name = "dictionaryDto") DictionaryDto dictionaryDto,
-//                          BindingResult bindingResult,
-//                          RedirectAttributes redirectAttributes){
-//
-//        //TODO: DTO + check if exists -> attributes + message;
-//
-//        if (bindingResult.hasErrors()) {
-//            redirectAttributes.addFlashAttribute("dictionaryDto", dictionaryDto)
-//                    .addFlashAttribute(BINDING_RESULT_PATH + "dictionaryDto", bindingResult);
-//
-//            return "redirect:/admin";
-//        }
-//
-//
-//        this.dictionaryService.addWord(dictionaryDto);
-//        redirectAttributes.addFlashAttribute("message", "Success!");
-//
-//        //success message?
-//        return "redirect:/admin";
-//    }
-//
-//    @PostMapping("/admin")
-//    public String promoteUser(@RequestParam String email,
-//                              RedirectAttributes redirectAttributes){
-//        this.playerService.promoteToAdmin(email);
-//        //success message?
-//        return "redirect:/admin";
-//    }
-//
-//    @ModelAttribute(name = "dictionaryDto")
-//    public DictionaryDto initDictionaryDto() {
-//        return new DictionaryDto();
-//    }
+    @PostMapping("/admin/add-word")
+    public String addWord(@Valid @ModelAttribute(name = "dictionaryDto") DictionaryDto dictionaryDto,
+                          BindingResult bindingResult,
+                          RedirectAttributes redirectAttributes){
+
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("dictionaryDto", dictionaryDto)
+                    .addFlashAttribute(BINDING_RESULT_PATH + "dictionaryDto", bindingResult);
+
+            return "redirect:/admin";
+        }
+
+
+        this.dictionaryService.addWord(dictionaryDto);
+        redirectAttributes.addFlashAttribute("message", "Success!");
+
+        //success message?
+        return "redirect:/admin";
+    }
+
+
+    @PostMapping("/admin/remove-word")
+    public String removeWord(@Valid @ModelAttribute(name = "dictionaryToRemoveDto") DictionaryToRemoveDto dictionaryToRemoveDto,
+                          BindingResult bindingResult,
+                          RedirectAttributes redirectAttributes){
+
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("dictionaryToRemoveDto", dictionaryToRemoveDto)
+                    .addFlashAttribute(BINDING_RESULT_PATH + "dictionaryToRemoveDto", bindingResult);
+
+            return "redirect:/admin";
+        }
+
+
+        this.dictionaryService.removeWord(dictionaryToRemoveDto);
+        redirectAttributes.addFlashAttribute("message", "Success!");
+
+        //success message?
+        return "redirect:/admin";
+    }
+
+
+
+    @PostMapping("/admin/promote-admin")
+    public String promoteToAdmin(@Valid @ModelAttribute(name = "emailForPromotionDto") EmailForPromotionDto emailForPromotionDto,
+                              BindingResult bindingResult,
+                              RedirectAttributes redirectAttributes) {
+
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("emailForPromotionDto", emailForPromotionDto)
+                    .addFlashAttribute(BINDING_RESULT_PATH + "emailForPromotionDto", bindingResult);
+
+            return "redirect:/admin";
+        }
+
+
+        playerService.promoteToAdmin(emailForPromotionDto.getEmail());
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/admin/remove-admin")
+    public String removeAdmin(@Valid @ModelAttribute(name = "emailForRemovingDto") EmailForRemovingDto emailForRemovingDto,
+                                 BindingResult bindingResult,
+                                 RedirectAttributes redirectAttributes) {
+
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("emailForRemovingDto", emailForRemovingDto)
+                    .addFlashAttribute(BINDING_RESULT_PATH + "emailForRemovingDto", bindingResult);
+
+            return "redirect:/admin";
+        }
+
+
+        playerService.removeAdmin(emailForRemovingDto.getEmail());
+        return "redirect:/admin";
+    }
+
+
+    @ModelAttribute(name = "dictionaryDto")
+    public DictionaryDto initDictionaryDto() {
+        return new DictionaryDto();
+    }
+
+    @ModelAttribute(name = "dictionaryToRemoveDto")
+    public DictionaryToRemoveDto initDictionaryToRemoveDto() {
+        return new DictionaryToRemoveDto();
+    }
+
+    @ModelAttribute(name = "emailForPromotionDto")
+    public EmailForPromotionDto innitEmailForPromotionDto() {
+        return new EmailForPromotionDto();
+    }
+
+    @ModelAttribute(name = "emailForRemovingDto")
+    public EmailForRemovingDto innitEmailForRemovingDto() {
+        return new EmailForRemovingDto();
+    }
 }

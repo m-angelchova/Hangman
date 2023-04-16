@@ -1,4 +1,4 @@
-package bg.softuni.hangman.model.constant;
+package bg.softuni.hangman.model.enums;
 
 public enum GameOutcomeEnum {
     WIN, LOSS

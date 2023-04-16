@@ -1,6 +1,6 @@
 package bg.softuni.hangman.service;
 
-import bg.softuni.hangman.model.constant.GameOutcomeEnum;
+import bg.softuni.hangman.model.enums.GameOutcomeEnum;
 import bg.softuni.hangman.model.dto.DictionaryDto;
 import bg.softuni.hangman.model.entity.Dictionary;
 import bg.softuni.hangman.model.entity.Game;
@@ -8,6 +8,7 @@ import bg.softuni.hangman.model.entity.Player;
 import bg.softuni.hangman.repository.DictionaryRepository;
 import bg.softuni.hangman.repository.GameRepository;
 import bg.softuni.hangman.repository.PlayerRepository;
+import org.apache.catalina.valves.rewrite.InternalRewriteMap;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,7 @@ public class GameService {
     }
 
     public String playGame(char letter) {
-
+        letter = Character.toUpperCase(letter);
         if (usedLetters.contains(letter)) {
             return "used letter";
         }
@@ -58,20 +59,19 @@ public class GameService {
     }
 
 
-    public void gameSetup() {
+    public void gameSetup() throws NoSuchElementException{
 
         if (hiddenWord == null) {
 
             // Select a word
             Random random = new Random();
-            Long randomNumber = random.nextLong(1, 5);
-            //todo bonus: make sure word doesn't repeat
+            Long randomNumber = random.nextLong(1, dictionaryRepository.count() + 1);
 
             dictionary = this.dictionaryRepository.findById(randomNumber).orElseThrow(NoSuchElementException::new);
-            word = dictionary.getWord();
+            word = dictionary.getWord().toUpperCase();
             hiddenWord = "-".repeat(word.length());
             wrongGuesses = 0;
-            usedLetters = new HashSet<>();
+            usedLetters = new LinkedHashSet<>();
 
             LOGGER.info("The random word is: " + word);
         }

@@ -1,9 +1,7 @@
 package bg.softuni.hangman.model.entity;
 
-import bg.softuni.hangman.model.constant.GameOutcomeEnum;
+import bg.softuni.hangman.model.enums.GameOutcomeEnum;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 
 
 @Entity

@@ -9,14 +9,89 @@
     <nav th:replace="~{/fragments/navigation}"></nav>
 </div>
 
-<div class="container-fluid">
 
-        <h1 class="text-center text-white mt-5">Здравей, <div class="d-inline" th:text="${player.getFirstName()}"/>!</h1>
-        <h2 class="text-center text-white mt-5">Твоят максимален резултат: <div class="d-inline" th:text="${player.getScore()}"/></h2>
-        <h2 class="text-center text-white mt-5">Твоят максимален резултат: <div class="d-inline" th:text="${player.getEmail()}"/></h2>
-<!--
-    games + email change + scoreboard position
--->
+<div class="game-container">
+    <img alt="hangman-smiley" th:src="@{/images/smiley-01.png}" class="game-image">
+    <div class="info-container">
+        <h1 class="text-center text-white mt-5">Здравей,
+            <div class="d-inline" th:text="${player.fullName}"/>
+            !
+        </h1>
+        <h2 class="text-center text-white mt-5">Твоят максимален резултат:
+            <div class="d-inline" th:text="${player.score}"/>
+        </h2>
+
+        <div class="submit-letter d-block">
+            <form th:method="POST"
+                  th:action="@{/profile}"
+                  th:object="${emailForSettingsDto}"
+                  class="form-group align-content-center ">
+
+
+                <label th:for="email"
+                       class="text-white font-weight-bold under">Смяна на имейл:  </label>
+                <div class="under">
+                    <input type="email"
+                           th:field="*{email}"
+                           class="form-control mb-2 mr-sm-2"
+                           placeholder="Въведи имейл"/>
+
+                    <p th:if="${#fields.hasErrors('email')}"
+                       class="errors alert alert-danger ">
+                        Въведете валиден или незает имейл.
+                    </p>
+
+                </div>
+                <div class="button-holder d-inline">
+                    <input type="submit" class="btn btn-info btn-lg" value="Смени"/>
+                </div>
+
+            </form>
+        </div>
+
+
+    </div>
+</div>
+<h2 class="text-center text-white mt-5">Последни игри:</h2>
+<div class="scoreboard">
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Дума</th>
+            <th scope="col">Резултат</th>
+            <th scope="col">Точки</th>
+        </tr>
+        </thead>
+        <tbody th:each="game : ${player.gamesPlayed}"
+               th:object="${game}">
+        <tr class="text-white">
+            <td th:text="*{dictionary}"></td>
+
+            <div th:if="*{outcome == 'WIN'}">
+                <td>Победа</td>
+            </div>
+            <div th:if="*{outcome == 'LOSS'}">
+                <td>Загуба</td>
+            </div>
+
+            <td th:text="*{score}"></td>
+
+        </tr>
+
+        </tbody>
+    </table>
+
+    <script>
+        var table = document.querySelector("table");
+        var rows = table.rows;
+        for (var i = 1; i <= 5; i++) {
+            var row = rows[i];
+            var numberCell = row.insertCell(0);
+            numberCell.textContent = i;
+        }
+    </script>
 
 </div>
 

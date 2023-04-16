@@ -1,6 +1,6 @@
 package bg.softuni.hangman.service;
 
-import bg.softuni.hangman.model.constant.PlayerRoleEnum;
+import bg.softuni.hangman.model.enums.PlayerRoleEnum;
 import bg.softuni.hangman.model.entity.Dictionary;
 import bg.softuni.hangman.model.entity.Player;
 import bg.softuni.hangman.model.entity.PlayerRole;

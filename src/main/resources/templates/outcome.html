@@ -39,7 +39,7 @@
         </h4>
 
         <h3 class="text-center text-white mt-5 margin-top">Думата беше:
-            <div class="d-inline" th:text="${dictionary.word}"/>
+            <div class="d-inline" th:text="${dictionary.word.toUpperCase()}"/>
         </h3>
         <h5 class="text-center text-white mt-5" th:text="${dictionary.definition}"></h5>
     </div>

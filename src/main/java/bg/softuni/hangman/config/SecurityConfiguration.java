@@ -1,6 +1,6 @@
 package bg.softuni.hangman.config;
 
-import bg.softuni.hangman.model.constant.PlayerRoleEnum;
+import bg.softuni.hangman.model.enums.PlayerRoleEnum;
 import bg.softuni.hangman.repository.PlayerRepository;
 import bg.softuni.hangman.service.ApplicationUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;

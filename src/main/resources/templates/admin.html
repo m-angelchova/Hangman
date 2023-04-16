@@ -1,12 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>AdminPanel</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/head}">
 </head>
 <body>
 
-<!--TODO: add word and promo user-->
+<div>
+    <nav th:replace="~{/fragments/navigation}"></nav>
+</div>
 
+<div class="game-container">
+
+    <div class="admin-container">
+        <form th:method="POST"
+              th:action="@{/admin/add-word}"
+              th:object="${dictionaryDto}"
+              class="form-inline align-content-center">
+
+
+            <label th:for="word"
+                   class="text-white font-weight-bold under">Добави дума и значение:</label>
+            <div class="d-inline">
+                <input type="text"
+                       th:field="*{word}"
+                       class="form-control mb-2 mr-sm-2"
+                       placeholder="Въведи дума"/>
+
+                <p th:if="${#fields.hasErrors('word')}"
+                   class="errors alert alert-danger ">
+                    Въведете дума.
+                </p>
+
+                <label th:for="definition">
+                        <textarea name="Text" cols="40" rows="5" th:field="*{definition}"
+                                  minlength="10" maxlength="500"
+                                  placeholder="Въведи значение"
+                                  class="form-control mb-2 mr-sm-2"></textarea>
+                </label>
+                <p th:if="${#fields.hasErrors('definition')}"
+                   class="errors alert alert-danger ">
+                    Въведете значение на думата.
+                </p>
+
+            </div>
+            <div class="button-holder under">
+                <input type="submit" class="btn btn-info btn-lg" value="Добави"/>
+            </div>
+        </form>
+    </div>
+
+    <div class="admin-container">
+        <form th:method="POST"
+              th:action="@{/admin/remove-word}"
+              th:object="${dictionaryToRemoveDto}"
+              class="form-inline align-content-center ">
+
+
+            <label th:for="word"
+                   class="text-white font-weight-bold under">Премахни дума:</label>
+            <div class="under">
+                <input type="text"
+                       th:field="*{word}"
+                       class="form-control mb-2 mr-sm-2"
+                       placeholder="Въведи дума"/>
+
+                <p th:if="${#fields.hasErrors('word')}"
+                   class="errors alert alert-danger ">
+                    Въведете дума.
+                </p>
+
+            </div>
+            <div class="button-holder d-inline under">
+                <input type="submit" class="btn btn-info btn-lg" value="Премахни"/>
+            </div>
+        </form>
+    </div>
+
+    <div class="admin-container">
+        <form th:method="POST"
+              th:action="@{/admin/promote-admin}"
+              th:object="${emailForPromotionDto}"
+              class="form-inline align-content-center ">
+
+
+            <label th:for="email"
+                   class="text-white font-weight-bold under">Направи админ:</label>
+            <div class="under">
+                <input type="email"
+                       th:field="*{email}"
+                       class="form-control mb-2 mr-sm-2"
+                       placeholder="Въведи имейл"/>
+
+                <p th:if="${#fields.hasErrors('email')}"
+                   class="errors alert alert-danger ">
+                    Въведете валиден имейл.
+                </p>
+
+            </div>
+            <div class="button-holder d-inline">
+                <input type="submit" class="btn btn-info btn-lg" value="Добави"/>
+            </div>
+        </form>
+    </div>
+
+    <div class="admin-container">
+        <form th:method="POST"
+              th:action="@{/admin/remove-admin}"
+              th:object="${emailForRemovingDto}"
+              class="form-inline align-content-center ">
+
+
+            <label th:for="email"
+                   class="text-white font-weight-bold">Премахни админ:</label>
+            <div class="under">
+                <input type="email"
+                       th:field="*{email}"
+                       class="form-control mb-2 mr-sm-2"
+                       placeholder="Въведи имейл"/>
+
+                <p th:if="${#fields.hasErrors('email')}"
+                   class="errors alert alert-danger ">
+                    Въведете валиден имейл.
+                </p>
+
+            </div>
+            <div class="button-holder d-inline">
+                <input type="submit" class="btn btn-info btn-lg" value="Премахни"/>
+            </div>
+        </form>
+
+    </div>
+</div>
+<div>
+    <footer></footer>
+</div>
+
+</div>
 </body>
 </html>
