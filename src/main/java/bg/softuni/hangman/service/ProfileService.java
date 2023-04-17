@@ -5,7 +5,6 @@ import bg.softuni.hangman.model.dto.GameProfileDto;
 import bg.softuni.hangman.model.dto.PlayerProfileDto;
 import bg.softuni.hangman.model.entity.Game;
 import bg.softuni.hangman.model.entity.Player;
-import bg.softuni.hangman.repository.GameRepository;
 import bg.softuni.hangman.repository.PlayerRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;

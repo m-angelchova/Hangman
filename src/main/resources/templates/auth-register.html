@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <span th:replace="~{/fragments/head}"></span>
@@ -13,7 +13,7 @@
 
 <div class="container">
 
-    <h2 class="text-center text-white">Регистрация</h2>
+    <h2 class="text-center text-white" th:text="#{register}">Регистрация</h2>
 
     <form th:method="POST"
           th:action="@{/register}"
@@ -24,7 +24,7 @@
             <div class="form-group col-md-6 mb-3">
 
                 <label th:for="firstName"
-                       class="text-white font-weight-bold">Име</label>
+                       class="text-white font-weight-bold" th:text="#{register_first_name}">Име</label>
 
                 <input type="text"
                        th:field="*{firstName}"
@@ -32,7 +32,7 @@
                        placeholder="Име"/>
 
                 <p th:if="${#fields.hasErrors('firstName')}"
-                   class="errors alert alert-danger">
+                   class="errors alert alert-danger" th:text="#{register_first_name_error}">
                     Въведете валидно име.
                 </p>
 
@@ -41,7 +41,7 @@
             <div class="form-group col-md-6 mb-3">
 
                 <label th:for="lastName"
-                       class="text-white font-weight-bold">Фамилия</label>
+                       class="text-white font-weight-bold" th:text="#{register_last_name}">Фамилия</label>
 
                 <input type="text"
                        th:field="*{lastName}"
@@ -50,7 +50,7 @@
                 />
 
                 <p th:if="${#fields.hasErrors('lastName')}"
-                   class="errors alert alert-danger">
+                   class="errors alert alert-danger" th:text="#{register_last_name_error}">
                     Въведете валидна фамилия.
                 </p>
             </div>
@@ -60,7 +60,8 @@
             <div class="form-group col-md-6 mb-3">
 
                 <label th:for="email"
-                       class="text-white font-weight-bold">
+                       class="text-white font-weight-bold"
+                       th:text="#{register_email}">
                     Имейл
                 </label>
 
@@ -70,7 +71,7 @@
                        placeholder="Имейл"
                        />
                 <p th:if="${#fields.hasErrors('email')}"
-                   class="errors alert alert-danger">
+                   class="errors alert alert-danger" th:text="#{register_email_error}">
                     Имейлът е невалиден или зает.
                 </p>
             </div>
@@ -79,7 +80,7 @@
         <div class="row">
             <div class="form-group col-md-6 mb-3">
                 <label th:for="password"
-                       class="text-white font-weight-bold">
+                       class="text-white font-weight-bold" th:text="#{register_password}">
                     Парола
                 </label>
                 <input id="password"
@@ -91,7 +92,7 @@
                        placeholder="Парола"
                        th:value="*{password}"/>
                 <p th:if="${#fields.hasErrors('password')}"
-                   class="errors alert alert-danger">
+                   class="errors alert alert-danger" th:text="#{register_password_error}">
                     Въведете валидна парола.
                 </p>
             </div>
@@ -99,7 +100,7 @@
             <div class="form-group col-md-6 mb-3">
 
                 <label for="confirmPassword"
-                       class="text-white font-weight-bold">
+                       class="text-white font-weight-bold" th:text="#{register_confirm_password}">
                     Потвърдете паролата
                 </label>
 
@@ -113,7 +114,7 @@
                        th:value="*{confirmPassword}"/>
 
                 <p th:if="${#fields.hasErrors('confirmPassword')}"
-                   class="errors alert alert-danger">
+                   class="errors alert alert-danger" th:text="#{register_confirm_password_error}">
                     Въведете съвпадаща парола.
                 </p>
 
@@ -124,7 +125,7 @@
         <div class="row">
             <div class="col col-md-4">
                 <div class="button-holder d-flex">
-                    <input type="submit" class="btn btn-info btn-lg" value="Регистрация"/>
+                    <input type="submit" class="btn btn-info btn-lg" th:value="#{register_button}"/>
                 </div>
             </div>
         </div>

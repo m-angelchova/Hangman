@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="bg" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="~{/fragments/head}">
@@ -7,13 +7,9 @@
 <body>
 
 <div class="container-fluid">
-  <h1 class="text-center text-white mt-5">ГРЕШКА! <div th:text="${error}"/></h1>
-  <h3 class="text-center text-white mt-5">Натиснете тук, за да се върнете в началната страница:</h3>
-<!--  <a href="/"><img alt="hangman" th:src="@{/images/logo.png}" class="logo-header"></a>-->
+  <h1 class="text-center text-white mt-5" th:text="#{error}" >ГРЕШКА! <div th:text="${error}"/></h1>
+  <h3 class="text-center text-white mt-5" th:text="#{error_redirect}">Натиснете тук, за да се върнете в началната страница:</h3>
 
-<!--  <li class="nav-item" sec:authorize="hasRole('ADMIN')">-->
-<!--    <a class="nav-link" th:href="@{/pages/admins}">Админ Панел</a>-->
-<!--  </li>-->
 
   <a href="/"  sec:authorize="isAnonymous()"  ><img alt="hangman" th:src="@{/images/logo.png}" class="logo-header"></a>
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{/fragments/head}">
 </head>
@@ -23,10 +23,10 @@
     <div class="info-container">
 
         <h1 class="text-center text-white mt-5" th:text="${hiddenWord}"/>
-        <h5 class="text-center text-white mt-5">Оставащи опити:
+        <h5 class="text-center text-white mt-5" th:text="#{remaining_attempts}">Оставащи опити:
             <div class="d-inline" th:text="${remainingGuesses}"/>
         </h5>
-        <h5 class="text-center text-white mt-5">Използвани букви:
+        <h5 class="text-center text-white mt-5" th:text="#{used_letters}">Използвани букви:
             <div class="d-inline" th:text="${usedLetters}"/>
         </h5>
 
@@ -42,7 +42,7 @@
                        class="text-white font-weight-bold"></label>
                 <div class="under">
                     <p th:if="${#fields.hasErrors('letter')}"
-                       class="errors alert alert-danger ">
+                       class="errors alert alert-danger " th:text="#{game_error}">
                         Въведете само една буква!
                     </p>
 
@@ -52,7 +52,7 @@
                            placeholder="Въведи буква тук"/>
                 </div>
                 <div class="button-holder d-inline">
-                    <input type="submit" class="btn btn-info btn-lg" value="Познай"/>
+                    <input type="submit" class="btn btn-info btn-lg" th:value="#{guess}"/>
                 </div>
 
             </form>

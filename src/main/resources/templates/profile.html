@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{/fragments/head}">
 </head>
@@ -13,11 +13,11 @@
 <div class="game-container">
     <img alt="hangman-smiley" th:src="@{/images/smiley-01.png}" class="game-image">
     <div class="info-container">
-        <h1 class="text-center text-white mt-5">Здравей,
+        <h1 class="text-center text-white mt-5" th:text="#{hello}">Здравей,
             <div class="d-inline" th:text="${player.fullName}"/>
             !
         </h1>
-        <h2 class="text-center text-white mt-5">Твоят максимален резултат:
+        <h2 class="text-center text-white mt-5" th:text="#{max_score}">Твоят максимален резултат:
             <div class="d-inline" th:text="${player.score}"/>
         </h2>
 
@@ -29,7 +29,7 @@
 
 
                 <label th:for="email"
-                       class="text-white font-weight-bold under">Смяна на имейл:  </label>
+                       class="text-white font-weight-bold under" th:text="#{email_change}">Смяна на имейл:  </label>
                 <div class="under">
                     <input type="email"
                            th:field="*{email}"
@@ -37,13 +37,13 @@
                            placeholder="Въведи имейл"/>
 
                     <p th:if="${#fields.hasErrors('email')}"
-                       class="errors alert alert-danger ">
+                       class="errors alert alert-danger " th:text="#{register_email_error}">
                         Въведете валиден или незает имейл.
                     </p>
 
                 </div>
                 <div class="button-holder d-inline">
-                    <input type="submit" class="btn btn-info btn-lg" value="Смени"/>
+                    <input type="submit" class="btn btn-info btn-lg" th:value="#{change_button}"/>
                 </div>
 
             </form>
@@ -52,16 +52,16 @@
 
     </div>
 </div>
-<h2 class="text-center text-white mt-5">Последни игри:</h2>
+<h2 class="text-center text-white mt-5" th:text="#{last_games}">Последни игри:</h2>
 <div class="scoreboard">
 
     <table class="table">
         <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Дума</th>
-            <th scope="col">Резултат</th>
-            <th scope="col">Точки</th>
+            <th scope="col" th:text="#{word}">Дума</th>
+            <th scope="col" th:text="#{outcome}">Резултат</th>
+            <th scope="col" th:text="#{score}">Точки</th>
         </tr>
         </thead>
         <tbody th:each="game : ${player.gamesPlayed}"
@@ -70,10 +70,10 @@
             <td th:text="*{dictionary}"></td>
 
             <div th:if="*{outcome == 'WIN'}">
-                <td>Победа</td>
+                <td th:text="#{win}">Победа</td>
             </div>
             <div th:if="*{outcome == 'LOSS'}">
-                <td>Загуба</td>
+                <td th:text="#{loss}">Загуба</td>
             </div>
 
             <td th:text="*{score}"></td>
