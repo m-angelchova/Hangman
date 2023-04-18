@@ -21,41 +21,41 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 public class RegistrationController {
 
-  private final PlayerService playerService;
-  public static final String BINDING_RESULT_PATH = "org.springframework.validation.BindingResult.";
+    private final PlayerService playerService;
+    public static final String BINDING_RESULT_PATH = "org.springframework.validation.BindingResult.";
 
 
-  public RegistrationController(PlayerService playerService) {
-    this.playerService = playerService;
-  }
-
-
-  @GetMapping("/register")
-  public String getRegister(Model model) {
-    return "auth-register";
-  }
-
-  @PostMapping("/register")
-  public String postRegister(@Valid @ModelAttribute(name = "playerRegisterDto") PlayerRegisterDto playerRegisterDto,
-                             BindingResult bindingResult,
-                             RedirectAttributes redirectAttributes) {
-
-    if (bindingResult.hasErrors()) {
-      redirectAttributes.addFlashAttribute("playerRegisterDto", playerRegisterDto)
-          .addFlashAttribute(BINDING_RESULT_PATH + "playerRegisterDto", bindingResult);
-
-      return "redirect:/register";
+    public RegistrationController(PlayerService playerService) {
+        this.playerService = playerService;
     }
 
-    playerService.registerPlayer(playerRegisterDto);
 
-    return "redirect:/login";
-  }
+    @GetMapping("/register")
+    public String getRegister(Model model) {
+        return "auth-register";
+    }
+
+    @PostMapping("/register")
+    public String postRegister(@Valid @ModelAttribute(name = "playerRegisterDto") PlayerRegisterDto playerRegisterDto,
+                               BindingResult bindingResult,
+                               RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("playerRegisterDto", playerRegisterDto)
+                    .addFlashAttribute(BINDING_RESULT_PATH + "playerRegisterDto", bindingResult);
+
+            return "redirect:/register";
+        }
+
+        playerService.registerPlayer(playerRegisterDto);
+
+        return "redirect:/login";
+    }
 
 
-  @ModelAttribute(name = "playerRegisterDto")
-  public PlayerRegisterDto initUserRegisterFormDto() {
-    return new PlayerRegisterDto();
-  }
+    @ModelAttribute(name = "playerRegisterDto")
+    public PlayerRegisterDto initUserRegisterFormDto() {
+        return new PlayerRegisterDto();
+    }
 
 }

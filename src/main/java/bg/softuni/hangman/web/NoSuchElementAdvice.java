@@ -12,16 +12,16 @@ import java.util.NoSuchElementException;
 @ControllerAdvice
 public class NoSuchElementAdvice {
 
-  @ResponseStatus(value = HttpStatus.NOT_FOUND)
-  @ExceptionHandler(NoSuchElementException.class)
-  public String onNoElementFound() {
-    return "error";
-  }
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NoSuchElementException.class)
+    public String onNoElementFound() {
+        return "error";
+    }
 
-  @ResponseStatus(value = HttpStatus.NOT_FOUND)
-  @ExceptionHandler(UsernameNotFoundException.class)
-  public String onNoUsernameFound() {
-    return "error";
-  }
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public String onNoUsernameFound() {
+        return "error";
+    }
 
 }

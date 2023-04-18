@@ -3,13 +3,9 @@ package bg.softuni.hangman.web;
 import bg.softuni.hangman.model.AppUserDetails;
 import bg.softuni.hangman.model.dto.EmailForSettingsDto;
 import bg.softuni.hangman.model.dto.PlayerProfileDto;
-import bg.softuni.hangman.service.ApplicationUserDetailsService;
 import bg.softuni.hangman.service.ProfileService;
 import jakarta.validation.Valid;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,7 +49,7 @@ public class ProfileController {
         }
 
 
-        profileService.changeEmail(user, emailForSettingsDto.getEmail());
+        profileService.changeEmail(user.getUsername(), emailForSettingsDto.getEmail());
         user.setUsername(emailForSettingsDto.getEmail());
         return "redirect:/profile";
     }

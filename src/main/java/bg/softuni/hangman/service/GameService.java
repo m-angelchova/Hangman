@@ -59,7 +59,7 @@ public class GameService {
     }
 
 
-    public void gameSetup(){
+    public void gameSetup() {
 
         if (hiddenWord == null) {
 
@@ -77,23 +77,20 @@ public class GameService {
         }
     }
 
-    public String makeGuess(char letter) {
+    public void makeGuess(char letter) {
         usedLetters.add(letter);
 
         if (word.indexOf(letter) == -1) {
             currentOutcome = "wrong";
             wrongGuesses++;
-            return currentOutcome;
-        }
-        currentOutcome = "right";
-        ;
-        for (int i = 0; i < word.length(); i++) {
-            if (word.charAt(i) == letter) {
-                hiddenWord = hiddenWord.substring(0, i) + letter + hiddenWord.substring(i + 1);
+        } else {
+            currentOutcome = "right";
+            for (int i = 0; i < word.length(); i++) {
+                if (word.charAt(i) == letter) {
+                    hiddenWord = hiddenWord.substring(0, i) + letter + hiddenWord.substring(i + 1);
+                }
             }
         }
-
-        return currentOutcome;
     }
 
     public boolean isWon() {
@@ -142,7 +139,7 @@ public class GameService {
         return score;
     }
 
-    public Long getTotalScore(String email)  {
+    public Long getTotalScore(String email) {
 
         Player loggedUser = this.playerRepository.findByEmail(email).orElseThrow(NoSuchElementException::new);
         gameRestart();
@@ -168,7 +165,6 @@ public class GameService {
     public int getWrongGuesses() {
         return wrongGuesses;
     }
-
 
 
     private void gameRestart() {

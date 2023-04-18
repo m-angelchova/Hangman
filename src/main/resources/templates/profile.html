@@ -13,12 +13,14 @@
 <div class="game-container">
     <img alt="hangman-smiley" th:src="@{/images/smiley-01.png}" class="game-image">
     <div class="info-container">
-        <h1 class="text-center text-white mt-5" th:text="#{hello}">Здравей,
-            <div class="d-inline" th:text="${player.fullName}"/>
-            !
+        <h1 class="text-center text-white mt-5">
+            <span th:text="#{hello}"></span>
+            <span th:text="${player.fullName}"></span>
+            <span>!</span>
         </h1>
-        <h2 class="text-center text-white mt-5" th:text="#{max_score}">Твоят максимален резултат:
-            <div class="d-inline" th:text="${player.score}"/>
+        <h2 class="text-center text-white mt-5">
+            <span th:text="#{max_score}"></span>
+            <span th:text="${player.score}"></span>
         </h2>
 
         <div class="submit-letter d-block">

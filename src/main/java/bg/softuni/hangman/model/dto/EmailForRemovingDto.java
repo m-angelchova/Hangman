@@ -1,6 +1,5 @@
 package bg.softuni.hangman.model.dto;
 
-import bg.softuni.hangman.validation.UniqueEmail;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 

@@ -118,12 +118,4 @@ public class Player extends BaseEntity {
         return this;
     }
 
-//    public Boolean getAccountActive() {
-//        return isAccountActive;
-//    }
-//
-//    public Player setAccountActive(Boolean accountActive) {
-//        isAccountActive = accountActive;
-//        return this;
-//    }
 }

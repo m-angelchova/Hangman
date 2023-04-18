@@ -23,11 +23,15 @@
     <div class="info-container">
 
         <h1 class="text-center text-white mt-5" th:text="${hiddenWord}"/>
-        <h5 class="text-center text-white mt-5" th:text="#{remaining_attempts}">Оставащи опити:
-            <div class="d-inline" th:text="${remainingGuesses}"/>
+        <h5 class="text-center text-white mt-5">
+            <span th:text="#{remaining_attempts}"></span>
+            <span th:text="${remainingGuesses}"></span>
         </h5>
-        <h5 class="text-center text-white mt-5" th:text="#{used_letters}">Използвани букви:
-            <div class="d-inline" th:text="${usedLetters}"/>
+
+
+        <h5 class="text-center text-white mt-5">
+            <span th:text="#{used_letters}"></span>
+            <span th:text="${usedLetters}"/></span>
         </h5>
 
 

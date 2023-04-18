@@ -1,73 +1,71 @@
 package bg.softuni.hangman.web;
 
-import com.icegreen.greenmail.util.GreenMail;
-import com.icegreen.greenmail.util.ServerSetup;
-import jakarta.mail.internet.MimeMessage;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import bg.softuni.hangman.model.dto.PlayerRegisterDto;
+import bg.softuni.hangman.service.PlayerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 public class RegistrationControllerIT {
 
-  @Autowired
-  private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-  @Value("${mail.host}")
-  private String mailHost;
+    @MockBean
+    private PlayerService playerService;
 
-  @Value("${mail.port}")
-  private Integer mailPort;
-  @Value("${mail.username}")
-  private String mailUsername;
-  @Value("${mail.password}")
-  private String mailPassword;
+    @Test
+    public void testGetRegister() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/register"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("auth-register"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("playerRegisterDto"));
+    }
 
-  private GreenMail greenMail;
+    @Test
+    public void testPostRegisterWithValidData() throws Exception {
+        PlayerRegisterDto playerRegisterDto = new PlayerRegisterDto()
+                .setFirstName("test")
+                .setLastName("testov")
+                .setEmail("test@user")
+                .setPassword("password")
+                .setConfirmPassword("password");
 
-  @BeforeEach
-  void setUp() {
-    greenMail = new GreenMail(new ServerSetup(mailPort, mailHost, "smtp"));
-    greenMail.start();
-    greenMail.setUser(mailUsername, mailPassword);
-  }
 
-  @AfterEach
-  void tearDown() {
-    greenMail.stop();
-  }
+        mockMvc.perform(MockMvcRequestBuilders.post("/register").with(csrf())
+                        .flashAttr("playerRegisterDto", playerRegisterDto))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/login"));
 
-  @Test
-  void testRegistration() throws Exception {
-    mockMvc.perform(post("/users/register").
-        param("email", "pesho@example.com").
-        param("firstName", "Pesho").
-        param("lastName", "Petrov").
-        param("password", "topsecret").
-        param("confirmPassword", "topsecret").
-        with(csrf())
-    ).
-        andExpect(status().is3xxRedirection()).
-        andExpect(redirectedUrl("/users/login"));
+        verify(playerService, times(1)).registerPlayer(playerRegisterDto);
+    }
 
-    MimeMessage[] receivedMessages = greenMail.getReceivedMessages();
-    Assertions.assertEquals(1, receivedMessages.length);
+    @Test
+    public void testPostRegisterWithInvalidData() throws Exception {
+        PlayerRegisterDto playerRegisterDto = new PlayerRegisterDto()
+                .setFirstName("test")
+                .setLastName("testov")
+                .setEmail("test@user")
+                .setPassword("password")
+                .setConfirmPassword("invalid");
 
-    MimeMessage welcomeMessage = receivedMessages[0];
-    Assertions.assertTrue(
-        welcomeMessage.getContent().toString().contains("Pesho Petrov"));
-  }
+        mockMvc.perform(MockMvcRequestBuilders.post("/register").with(csrf())
+                        .flashAttr("playerRegisterDto", playerRegisterDto))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/register"))
+                .andExpect(MockMvcResultMatchers.flash().attributeExists("playerRegisterDto"))
+                .andExpect(MockMvcResultMatchers.flash().attributeExists("org.springframework.validation.BindingResult.playerRegisterDto"));
+    }
 
 }

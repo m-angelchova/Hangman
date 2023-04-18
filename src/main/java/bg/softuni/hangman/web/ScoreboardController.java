@@ -20,7 +20,7 @@ public class ScoreboardController {
 
 
     @GetMapping("/scoreboard")
-    public String getAllOffers(Model model,
+    public String getAllScores(Model model,
                                @PageableDefault(
                                        sort = "score", direction = Sort.Direction.DESC
                                ) Pageable pageable) {

@@ -8,6 +8,7 @@ import bg.softuni.hangman.repository.PlayerRepository;
 import bg.softuni.hangman.repository.RoleRepository;
 import bg.softuni.hangman.service.EmailService;
 import bg.softuni.hangman.service.PlayerService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,10 +18,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PlayerServiceTest {
@@ -50,43 +54,23 @@ class PlayerServiceTest {
             mockRoleRepository,
             mockPasswordEncoder,
         mockEmailService);
-
-    mockRoleRepository.save(new PlayerRole().setRole(PlayerRoleEnum.ADMIN));
-    mockRoleRepository.save(new PlayerRole().setRole(PlayerRoleEnum.USER));
   }
 
-  @Test
-  void testPlayerRegistration_SaveInvoked() {
-
-    //LEFT for reference
-
-    // ARRANGE
-    PlayerRegisterDto testRegistrationDTO = new PlayerRegisterDto().
-        setEmail("test@example.com").
-        setFirstName("Test").
-        setLastName("Testov").
-        setPassword("defaultPass");
-
-    //ACT
-    mockRoleRepository.save(new PlayerRole().setRole(PlayerRoleEnum.ADMIN));
-    mockRoleRepository.save(new PlayerRole().setRole(PlayerRoleEnum.USER));
-
-    toTest.registerPlayer(testRegistrationDTO);
-
-    //ASSERT
-    verify(mockPlayerRepository).save(any());
-  }
 
   @Test
-  void testUserRegistration_SaveInvoked_Version2() {
+  void testUserRegistration_SaveInvoked() {
 
     // ARRANGE
-
     String testPassword = "topsecret";
     String encodedPassword = "encoded_password";
     String email = "test@example.com";
     String firstName = "Test";
     String lastName = "Testov";
+
+
+    PlayerRole testUserRole = new PlayerRole().setRole(PlayerRoleEnum.USER);
+    when(mockRoleRepository.findByRole(PlayerRoleEnum.USER)).
+            thenReturn(Optional.of(testUserRole));
 
     PlayerRegisterDto testRegistrationDTO = new PlayerRegisterDto().
         setEmail("test@example.com").
@@ -111,5 +95,82 @@ class PlayerServiceTest {
     verify(mockEmailService).
         sendRegistrationEmail(email, firstName + " " + lastName);
 
+  }
+
+
+  @Test
+  void testPromoteToAdmin() {
+    String email = "test@example.com";
+    String firstName = "Test";
+    String lastName = "Testov";
+    String testPassword = "topsecret";
+
+    PlayerRole testUserRole = new PlayerRole().setRole(PlayerRoleEnum.USER);
+    PlayerRole testAdminRole = new PlayerRole().setRole(PlayerRoleEnum.ADMIN);
+
+    List<PlayerRole> roles = new ArrayList<>();
+    roles.add(testUserRole);
+
+    when(mockRoleRepository.findByRole(PlayerRoleEnum.ADMIN)).
+            thenReturn(Optional.of(testAdminRole));
+
+
+    Player player = new Player().
+            setEmail(email).
+            setFirstName(firstName).
+            setLastName(lastName).
+            setPassword(testPassword)
+            .setRoles(roles);
+
+    when(mockPlayerRepository.findByEmail(email)).thenReturn(Optional.of(player));
+
+
+    toTest.promoteToAdmin(email);
+
+    //ASSERT
+    verify(mockPlayerRepository).save(playerArgumentCaptor.capture());
+    Player actualSavedUser = playerArgumentCaptor.getValue();
+
+    assertEquals(2, actualSavedUser.getRoles().size());
+    assertTrue(actualSavedUser.getRoles().contains(testAdminRole));
+  }
+
+  @Test
+  void testRemoveAdmin() {
+    String email = "test@example.com";
+    String firstName = "Test";
+    String lastName = "Testov";
+    String testPassword = "topsecret";
+
+    PlayerRole testUserRole = new PlayerRole().setRole(PlayerRoleEnum.USER);
+    PlayerRole testAdminRole = new PlayerRole().setRole(PlayerRoleEnum.ADMIN);
+
+    List<PlayerRole> roles = new ArrayList<>();
+    roles.add(testUserRole);
+    roles.add(testAdminRole);
+
+    when(mockRoleRepository.findByRole(PlayerRoleEnum.ADMIN)).
+            thenReturn(Optional.of(testAdminRole));
+
+
+
+    Player player = new Player().
+            setEmail(email).
+            setFirstName(firstName).
+            setLastName(lastName).
+            setPassword(testPassword).
+            setRoles(roles);
+
+    when(mockPlayerRepository.findByEmail(email)).thenReturn(Optional.of(player));
+
+
+    toTest.removeAdmin(email);
+
+    //ASSERT
+    verify(mockPlayerRepository).save(playerArgumentCaptor.capture());
+    Player actualSavedUser = playerArgumentCaptor.getValue();
+
+    assertEquals(1, actualSavedUser.getRoles().size());
+    assertFalse(actualSavedUser.getRoles().contains(testAdminRole));
   }
 }

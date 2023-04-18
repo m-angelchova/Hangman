@@ -17,8 +17,6 @@ import java.util.List;
 public class ScoreboardService {
     private final PlayerRepository playerRepository;
 
-
-
     public ScoreboardService(PlayerRepository playerRepository) {
         this.playerRepository = playerRepository;
 

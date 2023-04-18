@@ -8,8 +8,7 @@ import jakarta.persistence.*;
 @Table(name = "games")
 public class Game extends BaseEntity {
 
-
-    @ManyToOne //?
+    @ManyToOne
     private Dictionary dictionary;
 
     @Column
@@ -17,10 +16,6 @@ public class Game extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private GameOutcomeEnum outcome;
-
-
-
-
 
     public Dictionary getDictionary() {
         return dictionary;

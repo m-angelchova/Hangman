@@ -29,14 +29,14 @@ public class AdminPanelController {
     }
 
     @GetMapping("/admin")
-    public String adminPage(){
+    public String adminPage() {
         return "admin";
     }
 
     @PostMapping("/admin/add-word")
     public String addWord(@Valid @ModelAttribute(name = "dictionaryDto") DictionaryDto dictionaryDto,
                           BindingResult bindingResult,
-                          RedirectAttributes redirectAttributes){
+                          RedirectAttributes redirectAttributes) {
 
 
         if (bindingResult.hasErrors()) {
@@ -57,8 +57,8 @@ public class AdminPanelController {
 
     @PostMapping("/admin/remove-word")
     public String removeWord(@Valid @ModelAttribute(name = "dictionaryToRemoveDto") DictionaryToRemoveDto dictionaryToRemoveDto,
-                          BindingResult bindingResult,
-                          RedirectAttributes redirectAttributes){
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes) {
 
 
         if (bindingResult.hasErrors()) {
@@ -75,11 +75,10 @@ public class AdminPanelController {
     }
 
 
-
     @PostMapping("/admin/promote-admin")
     public String promoteToAdmin(@Valid @ModelAttribute(name = "emailForPromotionDto") EmailForPromotionDto emailForPromotionDto,
-                              BindingResult bindingResult,
-                              RedirectAttributes redirectAttributes) {
+                                 BindingResult bindingResult,
+                                 RedirectAttributes redirectAttributes) {
 
 
         if (bindingResult.hasErrors()) {
@@ -96,8 +95,8 @@ public class AdminPanelController {
 
     @PostMapping("/admin/remove-admin")
     public String removeAdmin(@Valid @ModelAttribute(name = "emailForRemovingDto") EmailForRemovingDto emailForRemovingDto,
-                                 BindingResult bindingResult,
-                                 RedirectAttributes redirectAttributes) {
+                              BindingResult bindingResult,
+                              RedirectAttributes redirectAttributes) {
 
 
         if (bindingResult.hasErrors()) {
