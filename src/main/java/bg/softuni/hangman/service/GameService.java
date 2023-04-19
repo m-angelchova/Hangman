@@ -142,7 +142,6 @@ public class GameService {
     public Long getTotalScore(String email) {
 
         Player loggedUser = this.playerRepository.findByEmail(email).orElseThrow(NoSuchElementException::new);
-        gameRestart();
         return loggedUser.getScore();
     }
 
@@ -167,7 +166,7 @@ public class GameService {
     }
 
 
-    private void gameRestart() {
+    public void gameRestart() {
 
         dictionary = null;
         word = null;

@@ -39,6 +39,7 @@ public class OutcomeController {
         model.addAttribute("score", score.toString());
         model.addAttribute("totalScore", totalScore.toString());
 
+        gameService.gameRestart();
         return "outcome";
     }
 
